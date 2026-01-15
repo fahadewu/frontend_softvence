@@ -1,0 +1,114 @@
+{
+  "caseStudies": [
+    {
+      "id": 1,
+      "slug": "oneisone-entertainment-2",
+      "title": "Oneisone Entertainment",
+      "description": "Branding & Design",
+      "categories": ["ui-ux", "vibe-coding"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-02.png",
+      "client": "Oneisone Entertainment",
+      "services": "UI/UX Design, Vibe Coding",
+      "year": "2024"
+    },
+    {
+      "id": 2,
+      "slug": "website-development-for-a-modern",
+      "title": "Website Development for a Modern",
+      "description": "Web Development & UI/UX",
+      "categories": ["ui-ux", "web-develop"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Web-Development-Cover-01.png",
+      "client": "Modern Business",
+      "services": "Web Development, UI/UX Design",
+      "year": "2024"
+    },
+    {
+      "id": 3,
+      "slug": "connectly-social-event-networking-app",
+      "title": "Social & Event Networking App",
+      "description": "Mobile App Design",
+      "categories": ["mobile-app", "ui-ux"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/download-88-1.png",
+      "client": "Connectly",
+      "services": "Mobile App Development, UI/UX Design",
+      "year": "2024"
+    },
+    {
+      "id": 4,
+      "slug": "e-commerce-website-dashboard-ui-design",
+      "title": "E-commerce Website Dashboard",
+      "description": "Dashboard UI Design",
+      "categories": ["ui-ux", "web-develop"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio-M1.jpg",
+      "client": "E-commerce Platform",
+      "services": "UI/UX Design, Web Development",
+      "year": "2024"
+    },
+    {
+      "id": 5,
+      "slug": "website-development",
+      "title": "Website Development",
+      "description": "Corporate Website",
+      "categories": ["ui-ux", "vibe-coding"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-03.png",
+      "client": "Corporate Client",
+      "services": "UI/UX Design, Vibe Coding",
+      "year": "2024"
+    },
+    {
+      "id": 6,
+      "slug": "theta-analyzers",
+      "title": "Theta Analyzers",
+      "description": "Analytics Dashboard",
+      "categories": ["ui-ux"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Dashboard-Cover.png",
+      "client": "Theta Analyzers",
+      "services": "UI/UX Design",
+      "year": "2024"
+    },
+    {
+      "id": 7,
+      "slug": "harmonize-venue-booking-app",
+      "title": "Harmonize – Venue Booking App",
+      "description": "Mobile Booking Platform",
+      "categories": ["mobile-app"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio1-1-scaled.jpg",
+      "client": "Harmonize",
+      "services": "Mobile App Development",
+      "year": "2024"
+    },
+    {
+      "id": 8,
+      "slug": "crafting-brand",
+      "title": "Crafting Business",
+      "description": "Brand Identity & Web Design",
+      "categories": ["branding", "ui-ux", "web-develop"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/06/working-with-calculator.jpg",
+      "client": "Crafting Business",
+      "services": "Branding, UI/UX Design, Web Development",
+      "year": "2024"
+    },
+    {
+      "id": 9,
+      "slug": "bank-made",
+      "title": "Bank Made",
+      "description": "Financial Branding",
+      "categories": ["branding", "ui-ux"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/06/Futuristic-Abstract-Design.jpg",
+      "client": "Bank Made",
+      "services": "Branding, UI/UX Design",
+      "year": "2024"
+    },
+    {
+      "id": 10,
+      "slug": "colin-wolf-pack",
+      "title": "Colin Wolf Pack",
+      "description": "Complete Brand Experience",
+      "categories": ["branding", "mobile-app", "ui-ux", "web-develop"],
+      "image": "https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2024/03/Thumnail-collin.png",
+      "client": "Colin Wolf Pack",
+      "services": "Branding, Mobile App, UI/UX Design, Web Development",
+      "year": "2024"
+    }
+  ]
+}
