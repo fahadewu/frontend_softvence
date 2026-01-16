@@ -47,6 +47,14 @@ export default function Preloader() {
                             }
                             // Remove loading class from body to enable scrolling
                             document.body.classList.remove('loading');
+
+                            // Refresh AOS and ScrollTrigger once content is relative and scrollable
+                            const AOS = (window as any).AOS;
+                            if (AOS) AOS.refresh();
+                            const gsap = (window as any).gsap;
+                            if (gsap && gsap.registerPlugin && (window as any).ScrollTrigger) {
+                                (window as any).ScrollTrigger.refresh();
+                            }
                         };
 
                         // Enable scroll on user interaction

@@ -1433,7 +1433,7 @@ textarea:focus {
 }
 
 .case--studies--area {
-    padding: 350px 0 165px;
+    padding: 220px 0 165px;
     background-size: cover;
     position: relative;
     overflow: hidden;
@@ -1748,16 +1748,16 @@ footer {
 
 .scale--circle {
     position: absolute;
-    top: 25%;
+    top: 0;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    width: 8500px;
-    height: 7500px;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
     border-radius: 50%;
     background-color: #131313;
-    z-index: 0;
+    z-index: -1;
     pointer-events: none;
-    will-change: transform;
+    backface-visibility: hidden;
 }
 
 /* Remove the static pseudo-shape on homepage and place the real animated circle where the static one used to be.

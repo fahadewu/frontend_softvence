@@ -19,16 +19,18 @@ export default function CaseStudySection() {
 
             if (section && circle) {
                 // Animation
+                // Animation matching softvence.agency with sharp rendering fix
                 gsap.fromTo(circle,
-                    { scale: 0 },
+                    { width: 0, height: 0 },
                     {
-                        scale: 1,
+                        width: '10000px',
+                        height: '10000px',
                         ease: 'none',
                         scrollTrigger: {
                             trigger: section,
-                            start: 'top bottom',
-                            end: 'bottom top',
-                            scrub: true,
+                            start: '-8% center',
+                            end: 'center center',
+                            scrub: 0.5,
                         }
                     }
                 );
