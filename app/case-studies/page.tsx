@@ -46,7 +46,7 @@ export default function CaseStudiesPage() {
                                 {caseStudies.length > 0 ? (
                                     caseStudies.map((slug) => (
                                         <div key={slug} className="col-lg-6 col-md-6 mt_20">
-                                            <Link href={`/case-studies/${slug}`} className="project--box">
+                                            <a href={`/case-studies/${slug}`} className="project--box">
                                                 <div className="img--area" style={{ background: '#222', height: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '20px', overflow: 'hidden' }}>
                                                     {/* Placeholder for thumbnail since we don't have metadata yet */}
                                                     <h3 style={{ color: '#fff', textTransform: 'capitalize' }}>{slug.replace(/-/g, ' ')}</h3>
@@ -55,7 +55,7 @@ export default function CaseStudiesPage() {
                                                     <h4 style={{ textTransform: 'capitalize' }}>{slug.replace(/-/g, ' ')}</h4>
                                                     <p className="primary--color">View Case Study</p>
                                                 </div>
-                                            </Link>
+                                            </a>
                                         </div>
                                     ))
                                 ) : (

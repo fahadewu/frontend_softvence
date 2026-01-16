@@ -14,23 +14,25 @@ export default function Preloader() {
             if (Splitting && isFirstLoad.current) {
                 Splitting();
             }
-            
+
             // Small delay for Splitting to process the DOM
             setTimeout(() => {
                 // Activate parent wrapper first (triggers CSS clip-path reveal animation)
                 const wrapper = document.querySelector('.parent--wrapper');
                 if (wrapper) {
                     // On first load, run the full animation
-                    if (isFirstLoad.current && !wrapper.classList.contains('active')) {
-                        wrapper.classList.add('active');
-                        
+                    if (isFirstLoad.current) {
+                        if (!wrapper.classList.contains('active')) {
+                            wrapper.classList.add('active');
+                        }
+
                         // Add delay class after clip-path animation or on user interaction
                         const enableScroll = () => {
                             if (wrapper) {
                                 wrapper.classList.add('delay');
                             }
                         };
-                        
+
                         // Enable scroll on user interaction
                         const interactionEvents = ['wheel', 'touchmove'];
                         const addDelayOnInteraction = () => {
@@ -39,69 +41,69 @@ export default function Preloader() {
                                 document.removeEventListener(event, addDelayOnInteraction);
                             });
                         };
-                        
+
                         interactionEvents.forEach(event => {
                             document.addEventListener(event, addDelayOnInteraction, { once: true });
                         });
-                        
+
                         // Also enable after clip-path animation completes (2s)
                         setTimeout(enableScroll, 2100);
-                    } else if (!isFirstLoad.current) {
+                    } else {
                         // On subsequent navigations, ensure classes are set immediately
                         wrapper.classList.add('active', 'delay');
                     }
                 }
-                
+
                 // Run GSAP text animations only on first load
                 const gsap = (window as any).gsap;
                 if (gsap && isFirstLoad.current) {
                     // Animate split characters
                     const chars = document.querySelectorAll(".char");
                     if (chars.length > 0) {
-                        gsap.timeline().from(".char", { 
-                            duration: 1, 
-                            opacity: 0, 
-                            skew: 7, 
-                            stagger: 0.02, 
-                            y: 200, 
-                            ease: "power1.inOut" 
+                        gsap.timeline().from(".char", {
+                            duration: 1,
+                            opacity: 0,
+                            skew: 7,
+                            stagger: 0.02,
+                            y: 200,
+                            ease: "power1.inOut"
                         });
                     }
-                    
+
                     // Animate branding paragraph
                     const brandingPara = document.querySelector(".hero--area .hero--box.branding--area p");
                     if (brandingPara) {
-                        gsap.from(".hero--area .hero--box.branding--area p", { 
-                            duration: 1, 
-                            opacity: 0, 
-                            skew: 7, 
-                            stagger: 0.02, 
-                            y: 200, 
-                            ease: "power1.inOut" 
+                        gsap.from(".hero--area .hero--box.branding--area p", {
+                            duration: 1,
+                            opacity: 0,
+                            skew: 7,
+                            stagger: 0.02,
+                            y: 200,
+                            ease: "power1.inOut"
                         });
                     }
-                    
+
                     // Animate play area
                     const playArea = document.querySelector(".hero--play--area");
                     if (playArea) {
-                        gsap.from(".hero--play--area", { 
-                            duration: 1.5, 
-                            opacity: 0, 
-                            y: 250, 
-                            ease: "power1.inOut" 
+                        gsap.from(".hero--play--area", {
+                            duration: 1.5,
+                            opacity: 0,
+                            y: 250,
+                            ease: "power1.inOut"
                         });
                     }
-                    
+
                     // Animate circle hero
                     const circleHero = document.querySelector(".circle--hero");
                     if (circleHero) {
-                        gsap.fromTo(".circle--hero", 
-                            { opacity: 0 }, 
+                        gsap.fromTo(".circle--hero",
+                            { opacity: 0 },
                             { duration: 1, opacity: 1, delay: 1, ease: "power1.inOut" }
                         );
                     }
                 }
-                
+
                 // Refresh AOS to ensure reveal animations work
                 setTimeout(() => {
                     const AOS = (window as any).AOS;
@@ -113,10 +115,10 @@ export default function Preloader() {
                         }, 1000);
                     }
                 }, isFirstLoad.current ? 2500 : 100);
-                
+
                 // Mark first load as complete
                 isFirstLoad.current = false;
-                
+
             }, 100);
         };
 

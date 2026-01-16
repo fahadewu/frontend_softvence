@@ -120,22 +120,33 @@ body {
 
 /* 6. ANIMATIONS */
 @keyframes rotate--text {
-  from { transform: rotate(0); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* 7. RESPONSIVENESS (The fix for your mobile issues) */
 @media only screen and (max-width: 991px) {
-  .hero--area .hero--box h1, 
+
+  .hero--area .hero--box h1,
   .hero--area .hero--box h2 {
     font-size: 80px;
   }
-  
+
   .hero--area .hero--box.design--area .hero--play--area {
     left: 262px;
     width: 298px;
@@ -147,11 +158,11 @@ body {
     padding-left: 20px;
     padding-right: 20px;
   }
-  
-  .hero--area .hero--box h1, 
+
+  .hero--area .hero--box h1,
   .hero--area .hero--box h2 {
     font-size: 40px;
-  }                                                                     
+  }
 }
 
 /* 8. BLOG DETAILS PAGE STYLES */
@@ -395,15 +406,15 @@ body {
   .blog--details--hero .inner--hero--text h2 {
     font-size: 36px;
   }
-  
+
   .blog--details--hero .moderator--area {
     gap: 20px;
   }
-  
+
   .single--blog--article--area .article--content h2 {
     font-size: 26px;
   }
-  
+
   .single--blog--article--area .article--content p {
     font-size: 16px;
   }
@@ -413,32 +424,32 @@ body {
   .blog--details--hero {
     padding: 140px 0 60px;
   }
-  
+
   .blog--details--hero .inner--hero--text h2 {
     font-size: 28px;
   }
-  
+
   .blog--details--hero .moderator--area {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .single--blog--article--area {
     padding: 40px 0 60px;
   }
-  
+
   .blog--navigation--area .row {
     flex-direction: column;
     gap: 30px;
   }
-  
+
   .blog--nav--link.next {
     justify-content: flex-start;
     text-align: left;
   }
-  
+
   .blog--tags--area {
     flex-direction: column;
     align-items: flex-start;
   }
-}                                                                                                                         
+}

@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Link from 'next/link';
 import caseStudiesData from '@/data/caseStudies.json';
+import CaseStudySection from './CaseStudySection';
 
 const allCaseStudies = caseStudiesData.caseStudies;
 
 export default function MainContent() {
+
+
 	useEffect(() => {
 		// Refresh AOS after component mounts to ensure animations work
 		const timer = setTimeout(() => {
@@ -17,27 +19,6 @@ export default function MainContent() {
 		}, 100);
 
 		return () => clearTimeout(timer);
-	}, []);
-
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-
-		if (sectionRef.current && circleRef.current) {
-			const timeline = gsap.timeline({
-				scrollTrigger: {
-					trigger: sectionRef.current,
-					start: "top center", // Starts when top of section hits center of viewport
-					end: "center center",
-					scrub: 0.5,
-				}
-			});
-
-			timeline.to(circleRef.current, {
-				width: "5000px",
-				height: "5000px",
-				ease: "power1.out"
-			});
-		}
 	}, []);
 
 	// Initialize Lottie animations for "How We Work" section
@@ -142,9 +123,6 @@ export default function MainContent() {
 		return () => clearTimeout(timer);
 	}, []);
 
-	const sectionRef = useRef<HTMLElement>(null);
-	const circleRef = useRef<HTMLDivElement>(null);
-
 	return (
 		<>
 
@@ -198,7 +176,7 @@ export default function MainContent() {
 				<div className="row">
 					<div className="col-md-12">
 						<div className="video--showrell--showcase">
-							<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Softvence.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A267%3Bbv_resized_ipad%3A820%2A457%3Bbv_resized_desktop%3A1319%2A735" data-bv-data- loading="lazy" className="showcase--img data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+							<img src="https://softvence.agency/wp-content/uploads/2025/11/Softvence.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A267%3Bbv_resized_ipad%3A820%2A457%3Bbv_resized_desktop%3A1319%2A735" data-bv-data- loading="lazy" className="showcase--img data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 						</div>
 					</div>
 				</div>
@@ -262,59 +240,59 @@ export default function MainContent() {
 								<h3 className="common--sub--heading">SERVICES</h3>
 								<ul>
 									<li>
-										<a href="servics/brand-identity-design/index.html">
+										<Link href="/services/brand-identity-design">
 											Brand Identity Design											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Branding-scaled.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/11/Branding-scaled.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/consultation/index.html">
+										<Link href="/services/consultation">
 											Consultation											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Consultation.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/11/Consultation.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/data-analytics/index.html">
+										<Link href="/services/data-analytics">
 											Data Analytics											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Data.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/11/Data.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/mobile-app-development/index.html">
+										<Link href="/services/mobile-app-development">
 											Mobile App Development											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/Mobile.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/11/Mobile.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/ux-ui-design/index.html">
+										<Link href="/services/ux-ui-design">
 											UX/UI Design											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/11/UI-UX-55.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/11/UI-UX-55.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1536%2A800" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/vibe-coding-development-service/index.html">
+										<Link href="/services/vibe-coding-development-service">
 											Vibe coding											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2025/02/6-Design.jpg?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A270%3Bbv_resized_ipad%3A820%2A461%3Bbv_resized_desktop%3A1380%2A776" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2025/02/6-Design.jpg?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A270%3Bbv_resized_ipad%3A820%2A461%3Bbv_resized_desktop%3A1380%2A776" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 									<li>
-										<a href="servics/web-development/index.html">
+										<Link href="/services/web-development">
 											Web Development											<img src="/assets/images/arrow-right.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
-										</a>
+										</Link>
 										<div className="img--area">
-											<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2024/02/Frame-10-1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1080%2A563" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+											<img src="https://softvence.agency/wp-content/uploads/2024/02/Frame-10-1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A480%2A250%3Bbv_resized_ipad%3A820%2A427%3Bbv_resized_desktop%3A1080%2A563" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 										</div>
 									</li>
 								</ul>
@@ -1837,11 +1815,11 @@ export default function MainContent() {
 											<h3>Discovery</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>We ensure that all requirements are understood.</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>We will advise you without obligation and evaluate the best
 														solution together with you.</p>
 												</li>
@@ -1861,17 +1839,17 @@ export default function MainContent() {
 											<h3>Design</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>In the design phase, the look of the website is developed and
 														presented.</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>The prototype will be developed until your complete satisfaction
 													</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>Additions are recorded in writing and incorporated into the
 														development phase</p>
 												</li>
@@ -1891,11 +1869,11 @@ export default function MainContent() {
 											<h3>Development</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>The website is implemented based on the prototype</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>You will receive regular insight into ongoing work.</p>
 												</li>
 											</ul>
@@ -1914,17 +1892,17 @@ export default function MainContent() {
 											<h3>Testing</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>From our end we Ensure testing the functionalities and make sure
 														everything works well.</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>quality Assurance is the most important task to handle the whole
 														websit</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>Additions are recorded in writing and incorporated into the
 														development phase</p>
 												</li>
@@ -1944,12 +1922,12 @@ export default function MainContent() {
 											<h3>Improvement</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>The findings from the testing phase are corrected and
 														implemented.</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>Last but not least, the customer checks the website through its
 														paces.</p>
 												</li>
@@ -1969,11 +1947,11 @@ export default function MainContent() {
 											<h3>Completion</h3>
 											<ul className="step--info">
 												<li>
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>Hooray! The website is live and working properly.</p>
 												</li>
 												<li className="mt_20">
-													<img src="/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
+													<img src="https://softvence-assect.vercel.app/assets/images/check.svg" data-bv-data- className="bv-tag-attr-replace data-bv-lazyload-tag-img" loading="lazy" alt="" />
 													<p>We stands behind this product and you are completely satisfied
 														with your new website.</p>
 												</li>
@@ -1988,265 +1966,7 @@ export default function MainContent() {
 			</section>
 
 
-
-			<section ref={sectionRef} className="case--studies--area home--case section section-dark">
-
-				<div ref={circleRef} className="scale--circle"></div>
-				<div className="container">
-					<div className="section--title">
-						<p className="common--sub--heading" data-aos="fade-up" data-aos-duration="1000">CASE STUDIES</p>
-						<h3 className="common--heading" data-aos="fade-up" data-aos-duration="1000">We try our best to
-							innovate, <span className="primary--color">design & <br /> Develop</span> all things together.
-						</h3>
-					</div>
-					<div className="row" data-aos="fade-up" data-aos-duration="1000">
-						<div className="col-md-12">
-							<div className="case--studies--wrapper">
-
-								<div className="filters filter-button-group">
-									<ul>
-										<li className="active button-click" data-filter=".branding">
-											<svg xmlns="http://www.w3.org/2000/svg" width={18} height={18}
-												viewBox="0 0 18 18" fill="none">
-												<path
-													d="M2.25 6.75C3.07843 6.75 3.75 6.07843 3.75 5.25C3.75 4.42157 3.07843 3.75 2.25 3.75C1.42157 3.75 0.75 4.42157 0.75 5.25C0.75 6.07843 1.42157 6.75 2.25 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M15.75 6.75C16.5784 6.75 17.25 6.07843 17.25 5.25C17.25 4.42157 16.5784 3.75 15.75 3.75C14.9216 3.75 14.25 4.42157 14.25 5.25C14.25 6.07843 14.9216 6.75 15.75 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path d="M14.25 5.25H11.25" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path d="M6.75 5.25H3.75" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path
-													d="M5.625 12.375V13.875C5.625 14.3325 5.3475 14.73 4.9575 14.895C4.815 14.9625 4.665 15 4.5 15H3C2.3775 15 1.875 14.4975 1.875 13.875V12.375C1.875 11.7525 2.3775 11.25 3 11.25H4.5C5.1225 11.25 5.625 11.7525 5.625 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M16.125 12.375V13.875C16.125 14.4975 15.6225 15 15 15H13.5C13.335 15 13.185 14.9625 13.0425 14.895C12.6525 14.73 12.375 14.3325 12.375 13.875V12.375C12.375 11.7525 12.8775 11.25 13.5 11.25H15C15.6225 11.25 16.125 11.7525 16.125 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 4.125V6.375C11.25 6.99 10.74 7.5 10.125 7.5H7.875C7.26 7.5 6.75 6.99 6.75 6.375V4.125C6.75 3.51 7.26 3 7.875 3H10.125C10.74 3 11.25 3.51 11.25 4.125Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 5.79688C13.0275 6.69688 14.25 8.63189 14.25 10.8744C14.25 11.0019 14.2425 11.1219 14.2275 11.2494"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M3.7725 11.2494C3.7575 11.1219 3.75 11.0019 3.75 10.8744C3.75 8.63189 4.9725 6.69688 6.75 5.79688"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-											Branding										</li>
-										<li className="active button-click" data-filter=".mobile-app">
-											<svg xmlns="http://www.w3.org/2000/svg" width={18} height={18}
-												viewBox="0 0 18 18" fill="none">
-												<path
-													d="M2.25 6.75C3.07843 6.75 3.75 6.07843 3.75 5.25C3.75 4.42157 3.07843 3.75 2.25 3.75C1.42157 3.75 0.75 4.42157 0.75 5.25C0.75 6.07843 1.42157 6.75 2.25 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M15.75 6.75C16.5784 6.75 17.25 6.07843 17.25 5.25C17.25 4.42157 16.5784 3.75 15.75 3.75C14.9216 3.75 14.25 4.42157 14.25 5.25C14.25 6.07843 14.9216 6.75 15.75 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path d="M14.25 5.25H11.25" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path d="M6.75 5.25H3.75" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path
-													d="M5.625 12.375V13.875C5.625 14.3325 5.3475 14.73 4.9575 14.895C4.815 14.9625 4.665 15 4.5 15H3C2.3775 15 1.875 14.4975 1.875 13.875V12.375C1.875 11.7525 2.3775 11.25 3 11.25H4.5C5.1225 11.25 5.625 11.7525 5.625 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M16.125 12.375V13.875C16.125 14.4975 15.6225 15 15 15H13.5C13.335 15 13.185 14.9625 13.0425 14.895C12.6525 14.73 12.375 14.3325 12.375 13.875V12.375C12.375 11.7525 12.8775 11.25 13.5 11.25H15C15.6225 11.25 16.125 11.7525 16.125 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 4.125V6.375C11.25 6.99 10.74 7.5 10.125 7.5H7.875C7.26 7.5 6.75 6.99 6.75 6.375V4.125C6.75 3.51 7.26 3 7.875 3H10.125C10.74 3 11.25 3.51 11.25 4.125Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 5.79688C13.0275 6.69688 14.25 8.63189 14.25 10.8744C14.25 11.0019 14.2425 11.1219 14.2275 11.2494"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M3.7725 11.2494C3.7575 11.1219 3.75 11.0019 3.75 10.8744C3.75 8.63189 4.9725 6.69688 6.75 5.79688"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-											Mobile App										</li>
-										<li className="active button-click" data-filter=".ui-ux">
-											<svg xmlns="http://www.w3.org/2000/svg" width={18} height={18}
-												viewBox="0 0 18 18" fill="none">
-												<path
-													d="M2.25 6.75C3.07843 6.75 3.75 6.07843 3.75 5.25C3.75 4.42157 3.07843 3.75 2.25 3.75C1.42157 3.75 0.75 4.42157 0.75 5.25C0.75 6.07843 1.42157 6.75 2.25 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M15.75 6.75C16.5784 6.75 17.25 6.07843 17.25 5.25C17.25 4.42157 16.5784 3.75 15.75 3.75C14.9216 3.75 14.25 4.42157 14.25 5.25C14.25 6.07843 14.9216 6.75 15.75 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path d="M14.25 5.25H11.25" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path d="M6.75 5.25H3.75" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path
-													d="M5.625 12.375V13.875C5.625 14.3325 5.3475 14.73 4.9575 14.895C4.815 14.9625 4.665 15 4.5 15H3C2.3775 15 1.875 14.4975 1.875 13.875V12.375C1.875 11.7525 2.3775 11.25 3 11.25H4.5C5.1225 11.25 5.625 11.7525 5.625 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M16.125 12.375V13.875C16.125 14.4975 15.6225 15 15 15H13.5C13.335 15 13.185 14.9625 13.0425 14.895C12.6525 14.73 12.375 14.3325 12.375 13.875V12.375C12.375 11.7525 12.8775 11.25 13.5 11.25H15C15.6225 11.25 16.125 11.7525 16.125 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 4.125V6.375C11.25 6.99 10.74 7.5 10.125 7.5H7.875C7.26 7.5 6.75 6.99 6.75 6.375V4.125C6.75 3.51 7.26 3 7.875 3H10.125C10.74 3 11.25 3.51 11.25 4.125Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 5.79688C13.0275 6.69688 14.25 8.63189 14.25 10.8744C14.25 11.0019 14.2425 11.1219 14.2275 11.2494"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M3.7725 11.2494C3.7575 11.1219 3.75 11.0019 3.75 10.8744C3.75 8.63189 4.9725 6.69688 6.75 5.79688"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-											UI/UX Design										</li>
-										<li className="active button-click" data-filter=".vibe-coding">
-											<svg xmlns="http://www.w3.org/2000/svg" width={18} height={18}
-												viewBox="0 0 18 18" fill="none">
-												<path
-													d="M2.25 6.75C3.07843 6.75 3.75 6.07843 3.75 5.25C3.75 4.42157 3.07843 3.75 2.25 3.75C1.42157 3.75 0.75 4.42157 0.75 5.25C0.75 6.07843 1.42157 6.75 2.25 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M15.75 6.75C16.5784 6.75 17.25 6.07843 17.25 5.25C17.25 4.42157 16.5784 3.75 15.75 3.75C14.9216 3.75 14.25 4.42157 14.25 5.25C14.25 6.07843 14.9216 6.75 15.75 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path d="M14.25 5.25H11.25" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path d="M6.75 5.25H3.75" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path
-													d="M5.625 12.375V13.875C5.625 14.3325 5.3475 14.73 4.9575 14.895C4.815 14.9625 4.665 15 4.5 15H3C2.3775 15 1.875 14.4975 1.875 13.875V12.375C1.875 11.7525 2.3775 11.25 3 11.25H4.5C5.1225 11.25 5.625 11.7525 5.625 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M16.125 12.375V13.875C16.125 14.4975 15.6225 15 15 15H13.5C13.335 15 13.185 14.9625 13.0425 14.895C12.6525 14.73 12.375 14.3325 12.375 13.875V12.375C12.375 11.7525 12.8775 11.25 13.5 11.25H15C15.6225 11.25 16.125 11.7525 16.125 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 4.125V6.375C11.25 6.99 10.74 7.5 10.125 7.5H7.875C7.26 7.5 6.75 6.99 6.75 6.375V4.125C6.75 3.51 7.26 3 7.875 3H10.125C10.74 3 11.25 3.51 11.25 4.125Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 5.79688C13.0275 6.69688 14.25 8.63189 14.25 10.8744C14.25 11.0019 14.2425 11.1219 14.2275 11.2494"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M3.7725 11.2494C3.7575 11.1219 3.75 11.0019 3.75 10.8744C3.75 8.63189 4.9725 6.69688 6.75 5.79688"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-											Vibe Coding										</li>
-										<li className="active button-click" data-filter=".web-develop">
-											<svg xmlns="http://www.w3.org/2000/svg" width={18} height={18}
-												viewBox="0 0 18 18" fill="none">
-												<path
-													d="M2.25 6.75C3.07843 6.75 3.75 6.07843 3.75 5.25C3.75 4.42157 3.07843 3.75 2.25 3.75C1.42157 3.75 0.75 4.42157 0.75 5.25C0.75 6.07843 1.42157 6.75 2.25 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M15.75 6.75C16.5784 6.75 17.25 6.07843 17.25 5.25C17.25 4.42157 16.5784 3.75 15.75 3.75C14.9216 3.75 14.25 4.42157 14.25 5.25C14.25 6.07843 14.9216 6.75 15.75 6.75Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path d="M14.25 5.25H11.25" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path d="M6.75 5.25H3.75" stroke="white" strokeWidth="1.5"
-													strokeMiterlimit="10" strokeLinecap="round"
-													strokeLinejoin="round" />
-												<path
-													d="M5.625 12.375V13.875C5.625 14.3325 5.3475 14.73 4.9575 14.895C4.815 14.9625 4.665 15 4.5 15H3C2.3775 15 1.875 14.4975 1.875 13.875V12.375C1.875 11.7525 2.3775 11.25 3 11.25H4.5C5.1225 11.25 5.625 11.7525 5.625 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M16.125 12.375V13.875C16.125 14.4975 15.6225 15 15 15H13.5C13.335 15 13.185 14.9625 13.0425 14.895C12.6525 14.73 12.375 14.3325 12.375 13.875V12.375C12.375 11.7525 12.8775 11.25 13.5 11.25H15C15.6225 11.25 16.125 11.7525 16.125 12.375Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 4.125V6.375C11.25 6.99 10.74 7.5 10.125 7.5H7.875C7.26 7.5 6.75 6.99 6.75 6.375V4.125C6.75 3.51 7.26 3 7.875 3H10.125C10.74 3 11.25 3.51 11.25 4.125Z"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M11.25 5.79688C13.0275 6.69688 14.25 8.63189 14.25 10.8744C14.25 11.0019 14.2425 11.1219 14.2275 11.2494"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-												<path
-													d="M3.7725 11.2494C3.7575 11.1219 3.75 11.0019 3.75 10.8744C3.75 8.63189 4.9725 6.69688 6.75 5.79688"
-													stroke="white" strokeWidth="1.5" strokeMiterlimit="10"
-													strokeLinecap="round" strokeLinejoin="round" />
-											</svg>
-											Web Development										</li>
-									</ul>
-								</div>
-
-								<div className="row case-gallery">
-									{allCaseStudies.slice(0, 10).map((caseStudy, index) => (
-										<div
-											key={caseStudy.id}
-											className={`col-md-6 mt_85 ${caseStudy.categories.join(' ')}`}
-											data-aos="fade-up"
-											data-aos-duration="1000"
-											data-aos-delay={index * 100}
-										>
-											<a href={`/case-studies/${caseStudy.slug}`} className="case--item">
-												<div className="img--area">
-													<div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom">
-													</div>
-													<img
-														src={caseStudy.image}
-														className="bv-tag-attr-replace data-bv-lazyload-tag-img"
-														loading="lazy"
-														alt={caseStudy.title}
-													/>
-
-													<div className="case--cursor">
-														view<br />
-														case study
-													</div>
-												</div>
-												<div className="content">
-													<h3>{caseStudy.title}</h3>
-													<p>Branding & Design</p>
-												</div>
-											</a>
-										</div>
-									))}
-								</div>
-
-								<div className="row mt-5">
-									<div className="col-md-12 text-center" data-aos="fade-up" data-aos-duration="1000">
-										<a href="/work" className="button buttonv2 button-click">View All Case Studies</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
+			<CaseStudySection />
 
 
 
@@ -2557,7 +2277,7 @@ export default function MainContent() {
 
 							<a className="blog--box" href="low-fidelity-vs-high-fidelity-prototyping-a-complete-guide/index.html">
 								<div className="img--area">
-									<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2024/02/Frame-8631.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A179%2A230%3Bbv_resized_ipad%3A179%2A230%3Bbv_resized_desktop%3A179%2A230" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+									<img src="https://softvence.agency/wp-content/uploads/2024/02/Frame-8631.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A179%2A230%3Bbv_resized_ipad%3A179%2A230%3Bbv_resized_desktop%3A179%2A230" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 								</div>
 								<div className="blog--content">
 									<h4>Low-Fidelity vs High-Fidelity Prototyping: A Complete Guide</h4>
@@ -2573,7 +2293,7 @@ export default function MainContent() {
 
 							<a className="blog--box" href="who-are-you-affiliated-with/index.html">
 								<div className="img--area">
-									<img src="https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/2024/02/blog1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A427%2A357%3Bbv_resized_ipad%3A427%2A357%3Bbv_resized_desktop%3A427%2A357" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
+									<img src="https://softvence.agency/wp-content/uploads/2024/02/blog1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A427%2A357%3Bbv_resized_ipad%3A427%2A357%3Bbv_resized_desktop%3A427%2A357" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 								</div>
 								<div className="blog--content">
 									<h4>Who are you affiliated with?</h4>

@@ -5,8 +5,8 @@ import Preloader from "@/components/Preloader";
 import RouteChangeHandler from "@/components/RouteChangeHandler";
 
 export const metadata: Metadata = {
-  title: "Softvence Agency",
-  description: "Softvence Agency Website",
+  title: "Softvence - Digital Design Agency",
+  description: "Digital Design Agency",
 };
 
 export default function RootLayout({
@@ -26,6 +26,11 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
+        {/* Favicon */}
+        <link rel="icon" href="/wp-content/uploads/2024/03/cropped-FAV_softvence-1-32x32.png" sizes="32x32" />
+        <link rel="icon" href="/wp-content/uploads/2024/03/cropped-FAV_softvence-1-192x192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/wp-content/uploads/2024/03/cropped-FAV_softvence-1-180x180.png" />
+
         {/* CSS Assets */}
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
@@ -38,6 +43,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/css/responsive.css" />
       </head>
       <body>
+
         {/* Global cursor helper (used by main.js for hover labels like Click/Open/Play/Prev/Next) */}
         <div className="body--cursor">
           <p className="click">Click</p>

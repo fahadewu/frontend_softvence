@@ -2440,16 +2440,12 @@
         overflow: hidden
     }
 
+    .body--cursor,
     .related--case--cursor,
     .service--hero--area .inner--hero--text .service--hero--para p,
     .sweet--number--area .common--heading br,
     .sweet--number--area .rotate--circle--wrapper {
         display: none
-    }
-
-    /* Re-enable body cursor for webview/floating/mobile where desired (keeps hover labels visible) */
-    .body--cursor {
-        display: flex;
     }
 
     .contact--popup--wrapper form .col-md-6 {
@@ -2461,58 +2457,6 @@
 
     .blog--box .img--area img {
         height: 254px
-    }
-
-    /* Ensure play button is visible and tappable in mobile/webview floating mode */
-    @media only screen and (max-width: 991px) {
-        .hero--video--area .playCursor {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(1) !important;
-            opacity: 1 !important;
-            z-index: 9999;
-            pointer-events: auto;
-            width: 100px;
-            height: 100px;
-        }
-
-        .hero--video--area .playCursor img {
-            width: 85px;
-            height: 85px;
-        }
-
-        .hero--video--area .playCursor svg {
-            width: 28px;
-            height: 28px;
-        }
-
-        /* Hide the bubble on mobile/touch devices */
-        .body--cursor {
-            display: none !important;
-            pointer-events: none !important;
-            /* ensure it doesn't interfere */
-        }
-
-        /* Video modal mobile styles */
-        .showrell--video--modal {
-            height: 100vh;
-        }
-
-        .showrell--video--modal .modal--item {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .showrell--video--modal .modal--item video {
-            width: 100%;
-            height: auto;
-            max-height: 100vh;
-            object-fit: contain;
-        }
     }
 
     .blog--content h4,
@@ -3270,41 +3214,26 @@
         margin-top: 48px
     }
 
-    .work--inner--hero {
-        padding: 150px 0 60px
-    }
-
     .work--inner--hero .inner--hero--text h1,
     .work--inner--hero .inner--hero--text h2,
     .work--inner--hero .inner--hero--text h3 {
-        font-size: 32px;
-        line-height: 1.2;
-        margin: 8px 0;
-        text-align: center
+        font-size: 46px
     }
 
     .work--inner--hero .inner--hero--text h2 svg {
-        width: 35px;
-        height: 35px;
-        margin-left: 10px
+        width: 60px;
+        height: 60px;
+        margin-left: 20px
+    }
+
+    .work--inner--hero .inner--hero--text h3 {
+        text-align: right;
+        margin-right: 13%
     }
 
     .work--inner--hero .rotate--circle--wrapper {
-        width: 80px;
-        height: 80px;
-        bottom: -15px;
-        left: 50%;
-        transform: translateX(-50%)
-    }
-
-    .work--inner--hero .rotate--circle--wrapper .circle--outer>img {
-        width: 80px;
-        height: 80px
-    }
-
-    .work--inner--hero .rotate--circle--wrapper .circle--inner {
-        width: 60px;
-        height: 60px
+        bottom: -6px;
+        left: 34.2%
     }
 
     .case--studies--area {
@@ -3771,30 +3700,6 @@
 
     .counter--wrapper .counter--box h2 {
         margin-top: 12px
-    }
-
-    .work--inner--hero {
-        padding: 130px 0 50px
-    }
-
-    .work--inner--hero .inner--hero--text h1,
-    .work--inner--hero .inner--hero--text h2,
-    .work--inner--hero .inner--hero--text h3 {
-        font-size: 28px;
-        line-height: 1.2;
-        margin: 6px 0;
-        text-align: center
-    }
-
-    .work--inner--hero .inner--hero--text h2 svg {
-        width: 30px;
-        height: 30px;
-        margin-left: 8px
-    }
-
-    .work--inner--hero .rotate--circle--wrapper {
-        bottom: -6px;
-        left: 34.2%
     }
 
     .award--area,
@@ -4669,32 +4574,11 @@
 
     .counter--wrapper .counter--box h2,
     .counter--wrapper .counter--box h2 p,
-    .counter--wrapper .counter--box h2 span {
-        font-size: 30px
-    }
-
-    .work--inner--hero {
-        padding: 120px 0 40px
-    }
-
+    .counter--wrapper .counter--box h2 span,
     .work--inner--hero .inner--hero--text h1,
     .work--inner--hero .inner--hero--text h2,
     .work--inner--hero .inner--hero--text h3 {
-        font-size: 24px;
-        line-height: 1.2;
-        margin: 5px 0;
-        text-align: center
-    }
-
-    .work--inner--hero .inner--hero--text h2 svg {
-        width: 25px;
-        height: 25px;
-        margin-left: 10px
-    }
-
-    .work--inner--hero .rotate--circle--wrapper {
-        bottom: -6px;
-        left: 34.2%
+        font-size: 30px
     }
 
     .counter--wrapper .counter--box h2 {
@@ -5118,6 +5002,11 @@
         width: 40px;
         height: 40px;
         margin-left: 10px
+    }
+
+    .work--inner--hero .inner--hero--text h3 {
+        text-align: right;
+        margin-right: 13%
     }
 
     .work--inner--hero .rotate--circle--wrapper {
@@ -6210,6 +6099,11 @@
         margin-left: 10px
     }
 
+    .work--inner--hero .inner--hero--text h3 {
+        text-align: right;
+        margin-right: 13%
+    }
+
     .work--inner--hero .rotate--circle--wrapper {
         bottom: -6px;
         left: 34.2%
@@ -6777,51 +6671,4 @@
     .hero--area {
         padding: 85px 0 0
     }
-}
-
-/* Section Background and Text Colors */
-.section-dark {
-    background-color: var(--heading-color);
-    color: var(--white);
-}
-
-.section-dark h1,
-.section-dark h2,
-.section-dark h3,
-.section-dark h4,
-.section-dark h5,
-.section-dark h6,
-.section-dark p,
-.section-dark span,
-.section-dark a {
-    color: var(--white);
-}
-
-.section-dark .common--heading,
-.section-dark .common--sub--heading {
-    color: var(--white);
-}
-
-.section-light {
-    background-color: var(--white);
-    color: var(--heading-color);
-}
-
-.section-light h1,
-.section-light h2,
-.section-light h3,
-.section-light h4,
-.section-light h5,
-.section-light h6 {
-    color: var(--heading-color);
-}
-
-.section-light p,
-.section-light span {
-    color: var(--para-color);
-}
-
-.section-light .common--heading,
-.section-light .common--sub--heading {
-    color: var(--heading-color);
 }

@@ -1433,7 +1433,7 @@ textarea:focus {
 }
 
 .case--studies--area {
-    padding: 220px 0 165px;
+    padding: 350px 0 165px;
     background-size: cover;
     position: relative;
     overflow: hidden;
@@ -1663,7 +1663,9 @@ footer {
     left: 0;
     bottom: 0;
     background-color: #f8f9fa;
-    z-index: 99
+    z-index: 99;
+    pointer-events: none !important;
+    /* visual overlay only - don't block clicks */
 }
 
 .faq--area,
@@ -1709,7 +1711,9 @@ footer {
 
 .case--studies--area .case--item {
     position: relative !important;
-    display: block
+    display: block;
+    z-index: 4;
+    /* ensure items are above background overlays */
 }
 
 .showrell--video--modal.active,
@@ -1744,16 +1748,36 @@ footer {
 
 .scale--circle {
     position: absolute;
-    top: 0;
+    top: 25%;
     left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%);
-    height: 0;
-    width: 0;
+    transform: translate(-50%, -50%) scale(0);
+    width: 8500px;
+    height: 7500px;
     border-radius: 50%;
-    z-index: -1
+    background-color: #131313;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform;
 }
+
+/* Remove the static pseudo-shape on homepage and place the real animated circle where the static one used to be.
+   The animated circle will be positioned behind the content for the homepage case studies section. */
+.case--studies--area.home--case::before,
+.case--studies--area.home--case::after {
+    display: none !important;
+}
+
+/* .case--studies--area.home--case .scale--circle {
+    left: 50%;
+    bottom: -40%;
+    top: auto;
+    transform: translateX(-50%) scale(0);
+    width: 1414px;
+    height: 1414px;
+    z-index: -1 !important;
+    pointer-events: none !important;
+    will-change: transform;
+} */
 
 .related--slider .owl-item img {
     width: auto !important
@@ -2372,6 +2396,8 @@ footer {
     transition: opacity .4s ease-in-out, transform .4s ease-in-out, -webkit-transform .4s ease-in-out;
     -o-transition: opacity .4s ease-in-out, transform .4s ease-in-out;
     z-index: 9999;
+    pointer-events: none;
+    /* don't block clicks when hidden */
     /* ensure play cursor is above other content */
 }
 
@@ -2439,7 +2465,18 @@ footer {
     transform: scale(0);
     -webkit-transition: opacity .4s ease-in-out, -webkit-transform .4s ease-in-out;
     transition: opacity .4s ease-in-out, transform .4s ease-in-out, -webkit-transform .4s ease-in-out;
-    -o-transition: opacity .4s ease-in-out, transform .4s ease-in-out
+    -o-transition: opacity .4s ease-in-out, transform .4s ease-in-out;
+    pointer-events: none;
+    /* avoid capturing clicks — visual-only element */
+    z-index: 3;
+    /* above image but below other UI */
+    background-color: #fff;
+    border-radius: 50%;
+    text-align: center;
+    color: #000;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.2;
 }
 
 .body--cursor {
@@ -3575,7 +3612,14 @@ footer {
 }
 
 .service--hero--area.inner--hero--area {
-    padding-bottom: 50px
+    padding-bottom: 50px;
+    background-color: var(--white);
+}
+
+.section-light {
+    background-color: var(--white);
+
+    margin-top: 100px;
 }
 
 .service--agency--area {
@@ -4272,6 +4316,44 @@ form.submitting .wpcf7-spinner {
         opacity: 0;
     }
 }
+
+/* Fix for Why Choose Us Hover Effect */
+.choose--card:hover .hover--revel--img {
+    opacity: 1;
+    -webkit-transform: translate(-50%, -50%) scale(1);
+    -ms-transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Fix for Portfolio Button Interaction */
+.portfolio--links .hover--portfolio--icons {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 0;
+    z-index: 10;
+}
+
+.portfolio--links.active .hover--portfolio--icons {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: all;
+}
+
+.portfolio--links.active .button {
+    color: transparent !important;
+}
+
+
 
 .wpcf7 [inert] {
     opacity: 0.5;

@@ -8,7 +8,8 @@ import caseStudiesData from '@/data/caseStudies.json';
 const allCaseStudies = caseStudiesData.caseStudies.map(cs => ({
     slug: cs.slug,
     title: cs.title,
-    categories: cs.categories.join(' ')
+    categories: cs.categories.join(' '),
+    image: cs.image
 }));
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
@@ -51,7 +52,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         // Fallback: try to extract body content
         const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
         mainContent = bodyMatch ? bodyMatch[1] : htmlContent;
-        
+
         // Remove Header if we're using body
         mainContent = mainContent.replace(/<header[\s\S]*?<\/header>/gi, '');
         // Remove Footer
@@ -79,20 +80,26 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     // Fix any relative wp-content/assets paths
     mainContent = mainContent.replace(/src="wp-content\//g, 'src="/wp-content/');
     mainContent = mainContent.replace(/src="assets\//g, 'src="/assets/');
+
+    // Fix links
     mainContent = mainContent.replace(/href="\.\.\/\.\.\//g, 'href="/');
     mainContent = mainContent.replace(/href="\.\.\//g, 'href="/case-studies/');
-    
+
+    // Remove index.html from links
+    mainContent = mainContent.replace(/href="([^"]*)\/index\.html"/g, 'href="$1"');
+    mainContent = mainContent.replace(/href="([^"]*)index\.html"/g, 'href="$1"');
+
     // Remove link tags (stylesheets that might conflict) - but keep them if inside head
     mainContent = mainContent.replace(/<link[\s\S]*?>/gi, '');
-    
+
     // Remove meta tags
     mainContent = mainContent.replace(/<meta[\s\S]*?>/gi, '');
-    
+
     // Simple trim only - avoid aggressive whitespace removal
     mainContent = mainContent.trim();
 
     return (
-        <CaseStudyPageClient 
+        <CaseStudyPageClient
             htmlContent={mainContent}
             relatedCaseStudies={relatedCaseStudies}
             prevCaseStudy={prevCaseStudy}

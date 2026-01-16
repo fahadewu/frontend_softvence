@@ -15,11 +15,33 @@ export default function RouteChangeHandler() {
         // Cleanup: clear timeout and remove delegated handlers bound by this component
         return () => {
             clearTimeout(timeoutId);
+
+            // Destroy Lenis smooth scroll instance
+            if (typeof window !== 'undefined' && (window as any).lenisInstance) {
+                try {
+                    (window as any).lenisInstance.destroy();
+                    (window as any).lenisInstance = null;
+                } catch (cleanupErr) {
+                    console.warn('Error destroying Lenis:', cleanupErr);
+                }
+            }
+
+            // Kill all GSAP ScrollTriggers
+            if (typeof window !== 'undefined' && (window as any).ScrollTrigger) {
+                try {
+                    (window as any).ScrollTrigger.getAll().forEach((st: any) => st.kill());
+                } catch (cleanupErr) {
+                    console.warn('Error killing ScrollTriggers:', cleanupErr);
+                }
+            }
+
             if (typeof window !== 'undefined' && (window as any).jQuery) {
                 try {
                     const $ = (window as any).jQuery;
                     // Remove delegated UI handlers and isotope filter handlers
-                    $(document).off('.softvenceUI');                    $(document).off('.softvenceNav');                    $(document).off('click.isotopeFilter touchstart.isotopeFilter');
+                    $(document).off('.softvenceUI');
+                    $(document).off('.softvenceNav');
+                    $(document).off('click.isotopeFilter touchstart.isotopeFilter');
                 } catch (cleanupErr) {
                     // ignore cleanup errors
                 }
@@ -51,7 +73,7 @@ export default function RouteChangeHandler() {
 
                 try {
                     // Destroy existing carousels first to prevent duplicates
-                    $('.owl-carousel').each(function(this: HTMLElement) {
+                    $('.owl-carousel').each(function (this: HTMLElement) {
                         const $carousel = $(this);
                         if ($carousel.data('owl.carousel')) {
                             $carousel.trigger('destroy.owl.carousel');
@@ -253,13 +275,95 @@ export default function RouteChangeHandler() {
             ensurejQuery();
         }
 
+        // Reinitialize Lenis smooth scroll
+        if (typeof window !== 'undefined' && windowAny.Lenis) {
+            try {
+                // Destroy existing instance if it exists
+                if (windowAny.lenisInstance) {
+                    windowAny.lenisInstance.destroy();
+                }
+
+                // Create new Lenis instance
+                const lenis = new windowAny.Lenis({
+                    duration: 1.2,
+                    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smoothWheel: true,
+                });
+
+                // Store instance globally
+                windowAny.lenisInstance = lenis;
+
+                // Start the RAF loop
+                function raf(time: number) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+
+                // Integrate with ScrollTrigger if available
+                if (windowAny.ScrollTrigger) {
+                    // Update ScrollTrigger on Lenis scroll
+                    lenis.on('scroll', windowAny.ScrollTrigger.update);
+
+                    // Setup scrollerProxy so ScrollTrigger reads scroll from Lenis
+                    try {
+                        const scroller = document.scrollingElement || document.documentElement;
+                        windowAny.ScrollTrigger.scrollerProxy(scroller, {
+                            scrollTop(value: any) {
+                                if (arguments.length) {
+                                    // Set position via Lenis
+                                    try {
+                                        // immediate scrollTo to match expected behavior
+                                        if (typeof lenis.scrollTo === 'function') {
+                                            lenis.scrollTo(value, { duration: 0, immediate: true });
+                                        } else if (typeof lenis.scroll === 'number') {
+                                            // fallback: no-op
+                                        }
+                                    } catch (e) {
+                                        // ignore
+                                    }
+                                }
+                                // return current scroll position
+                                return lenis && typeof lenis.scroll === 'number' ? lenis.scroll : scroller.scrollTop;
+                            },
+                            getBoundingClientRect() {
+                                return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+                            },
+                            // Use transform pinning when possible
+                            pinType: (scroller as any).style && (scroller as any).style.transform ? 'transform' : 'fixed'
+                        });
+
+                        // Refresh ScrollTrigger after setting scrollerProxy
+                        windowAny.ScrollTrigger.refresh();
+                        console.log('Lenis scrollerProxy configured for ScrollTrigger');
+
+                        // Ensure ScrollTrigger refresh triggers lenis update
+                        windowAny.ScrollTrigger.addEventListener('refresh', () => {
+                            if (lenis && typeof lenis.raf === 'function') {
+                                lenis.raf(performance.now());
+                            }
+                        });
+                    } catch (err) {
+                        console.warn('Error setting ScrollTrigger.scrollerProxy for Lenis:', err);
+                    }
+                }
+            } catch (error) {
+                console.warn('Error initializing Lenis:', error);
+            }
+        }
+
         // Reinitialize GSAP ScrollTrigger
         if (typeof window !== 'undefined' && windowAny.gsap && windowAny.ScrollTrigger) {
             try {
-                // Refresh ScrollTrigger to recalculate positions
-                windowAny.ScrollTrigger.refresh();
+                // Register ScrollTrigger plugin
+                windowAny.gsap.registerPlugin(windowAny.ScrollTrigger);
+
+                // Refresh ScrollTrigger to recalculate positions after a delay
+                setTimeout(() => {
+                    windowAny.ScrollTrigger.refresh();
+                }, 500);
             } catch (error) {
-                console.warn('Error refreshing ScrollTrigger:', error);
+                console.warn('Error initializing ScrollTrigger:', error);
             }
         }
 
@@ -326,7 +430,8 @@ export default function RouteChangeHandler() {
                     window.location.href = href;
                 }, 60);
             };
-            document.addEventListener('click', navClickHandler, true);
+            // Use non-capturing listener to avoid interfering with other delegated click handlers
+            document.addEventListener('click', navClickHandler, false);
             winAny.__softvenceCursor.navClickHandler = navClickHandler;
         }
 

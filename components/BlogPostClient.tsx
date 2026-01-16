@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Header from './Header';
 import Footer from './Footer';
@@ -34,6 +34,13 @@ export default function BlogPostClient({
     prevPost,
     nextPost
 }: BlogPostClientProps) {
+    const [currentUrl, setCurrentUrl] = useState('');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setCurrentUrl(window.location.href);
+        }
+    }, []);
     useEffect(() => {
         // Initialize libraries after content is mounted
         if (typeof window !== 'undefined') {
@@ -70,13 +77,44 @@ export default function BlogPostClient({
         }
     }, []);
 
+    // Helper function to clean up image URLs
+    const cleanImageUrl = (url: string) => {
+        if (!url) return '';
+        // Remove the prefix if it exists
+        return url.replace('https://softvence.agency/wp-content/uploads/al_opt_content/IMAGE/softvence.agency/wp-content/uploads/', 'https://softvence.agency/wp-content/uploads/');
+    };
+
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const cursor = target.querySelector('.drag--cursor') as HTMLElement;
+        if (cursor) {
+            const rect = target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+            cursor.style.opacity = '1';
+            cursor.style.transform = 'scale(1) translate(-50%, -50%)';
+        }
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const cursor = target.querySelector('.drag--cursor') as HTMLElement;
+        if (cursor) {
+            cursor.style.opacity = '0';
+            cursor.style.transform = 'scale(0) translate(-50%, -50%)';
+        }
+    };
+
     return (
         <div id="page" className="site">
             <div className="parent--wrapper">
                 <Header />
                 <main>
                     {/* Blog Details Hero - matches original structure */}
-                    <section className="blog--details--hero inner--hero--area section section-light">
+                    <section className="blog--details--hero inner--hero--area section section-dark">
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-12">
@@ -86,7 +124,7 @@ export default function BlogPostClient({
                                         <div className="moderator--area" data-aos="fade-up" data-aos-duration="1000">
                                             <div className="moderator--data">
                                                 <img
-                                                    src="https://softvence.agency/wp-content/uploads/2024/03/softvence-favicon-removebg-preview.png"
+                                                    src="https://softvence.agency/wp-content/uploads/2024/02/Frame-8631-150x150.png"
                                                     alt={post.author}
                                                     className="moderator--img"
                                                     loading="lazy"
@@ -117,14 +155,14 @@ export default function BlogPostClient({
                     </section>
 
                     {/* Single Blog Article Area - matches original structure */}
-                    <section className="single--blog--article--area section section-light">
+                    <section className="single--blog--article--area section section-dark">
                         <div className="container">
                             <div className="row">
                                 <div className="col-lg-10 offset-lg-1">
                                     {/* Featured Image */}
-                                    <div className="article--feature--img" data-aos="fade-up" data-aos-duration="1000">
+                                    <div className="img--area big--img" data-aos="fade-up" data-aos-duration="1000">
                                         <img
-                                            src={post.image}
+                                            src={cleanImageUrl(post.image)}
                                             alt={post.title}
                                             className="w-100"
                                             loading="lazy"
@@ -156,17 +194,17 @@ export default function BlogPostClient({
                                             <div className="blog--social">
                                                 <p>Share:</p>
                                                 <div className="social--icons">
-                                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="social--icon">
+                                                    <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`} target="_blank" rel="noopener noreferrer" className="social--icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                                             <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
                                                         </svg>
                                                     </a>
-                                                    <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="social--icon">
+                                                    <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(currentUrl)}&text=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="social--icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                                             <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
                                                         </svg>
                                                     </a>
-                                                    <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}&title=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="social--icon">
+                                                    <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(currentUrl)}&title=${encodeURIComponent(post.title)}`} target="_blank" rel="noopener noreferrer" className="social--icon">
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
                                                             <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
                                                             <rect x="2" y="9" width="4" height="12"></rect>
@@ -184,7 +222,7 @@ export default function BlogPostClient({
 
                     {/* Blog Navigation - Previous/Next */}
                     {(prevPost || nextPost) && (
-                        <section className="blog--navigation--area section section-light">
+                        <section className="blog--navigation--area section section-dark">
                             <div className="container">
                                 <div className="row">
                                     <div className="col-md-6">
@@ -234,14 +272,34 @@ export default function BlogPostClient({
                                         You May Also <span className="primary--color">Like These</span>
                                     </h3>
                                 </div>
-                                <div className="related--carousel--wrapper" data-aos="fade-up" data-aos-duration="1000">
+                                <div className="related--carousel--wrapper" data-aos="fade-up" data-aos-duration="1000" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave} style={{ position: 'relative', cursor: 'none' }}>
+                                    <div className="drag--cursor" style={{
+                                        position: 'absolute',
+                                        pointerEvents: 'none',
+                                        transform: 'translate(-50%, -50%) scale(0)',
+                                        opacity: 0,
+                                        zIndex: 999,
+                                        backgroundColor: '#fff',
+                                        color: '#000',
+                                        width: '80px',
+                                        height: '80px',
+                                        borderRadius: '50%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        fontSize: '14px',
+                                        fontWeight: '600',
+                                        transition: 'transform 0.1s ease, opacity 0.2s ease'
+                                    }}>
+                                        Drag
+                                    </div>
                                     <div className="owl-carousel related--blog--slider">
                                         {relatedPosts.map((relatedPost) => (
                                             <div key={relatedPost.id} className="item">
                                                 <Link href={`/blog/${relatedPost.slug}`} className="blog--box">
                                                     <div className="img--area">
                                                         <img
-                                                            src={relatedPost.image}
+                                                            src={cleanImageUrl(relatedPost.image)}
                                                             alt={relatedPost.title}
                                                             className="w-100"
                                                             loading="lazy"
