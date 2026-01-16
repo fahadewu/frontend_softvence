@@ -1,4 +1,4 @@
-export {};
+export { };
 
 declare global {
   interface Window {
@@ -8,4 +8,14 @@ declare global {
     splittingInitialized?: boolean;
     heroAnimationsInitialized?: boolean;
   }
+}
+
+
+// Look for something like this:
+interface CaseStudy {
+  id: string;
+  title: string;
+  // Add this line:
+  image: string;
+  // ... other properties
 }

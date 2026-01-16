@@ -42,7 +42,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="/assets/css/style.css" />
         <link rel="stylesheet" href="/assets/css/responsive.css" />
       </head>
-      <body>
+      <body className="loading">
 
         {/* Global cursor helper (used by main.js for hover labels like Click/Open/Play/Prev/Next) */}
         <div className="body--cursor">

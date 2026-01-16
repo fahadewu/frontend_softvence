@@ -9,6 +9,11 @@ export default function Preloader() {
 
     useEffect(() => {
         const handleLoad = () => {
+            // Scroll to top on load to ensure clean start
+            if (isFirstLoad.current) {
+                window.scrollTo(0, 0);
+            }
+
             // Initialize Splitting.js only once on first load
             const Splitting = (window as any).Splitting;
             if (Splitting && isFirstLoad.current) {
@@ -22,6 +27,7 @@ export default function Preloader() {
                 if (wrapper) {
                     // On first load, run the full animation
                     if (isFirstLoad.current) {
+                        // Ensure wrapper is active (visible)
                         if (!wrapper.classList.contains('active')) {
                             wrapper.classList.add('active');
                         }
@@ -31,6 +37,8 @@ export default function Preloader() {
                             if (wrapper) {
                                 wrapper.classList.add('delay');
                             }
+                            // Remove loading class from body to enable scrolling
+                            document.body.classList.remove('loading');
                         };
 
                         // Enable scroll on user interaction

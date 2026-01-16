@@ -42,6 +42,11 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
+body.loading {
+  overflow: hidden !important;
+  height: 100vh;
+}
+
 /* 3. CORE LAYOUT ELEMENTS */
 .container {
   width: 100%;
@@ -452,4 +457,21 @@ body {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .blog--tags--area {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* Parent Wrapper Reveal Animation */
+.parent--wrapper {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.parent--wrapper.active {
+  opacity: 1;
+  visibility: visible;
 }
