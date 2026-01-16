@@ -10,6 +10,7 @@ interface CaseStudy {
     slug: string;
     title: string;
     categories: string;
+    image?: string;
 }
 
 interface CaseStudyPageClientProps {
