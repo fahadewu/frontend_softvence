@@ -7,7 +7,6 @@
 
             if (
                 (gsap.registerPlugin(ScrollTrigger),
-                    e(".parent--wrapper").addClass("active"),
                     e(document).on("wheel touchmove", function (o) {
                         e(".parent--wrapper").addClass("delay");
                     }),

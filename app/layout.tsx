@@ -1,8 +1,30 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Poppins, Inter, Space_Grotesk } from "next/font/google";
 import "./globals-custom.css";
 import Preloader from "@/components/Preloader";
 import RouteChangeHandler from "@/components/RouteChangeHandler";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-grotesk",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Softvence - Digital Design Agency",
@@ -15,16 +37,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={`${poppins.variable} ${inter.variable} ${spaceGrotesk.variable}`}>
       <head>
         {/* Viewport for mobile responsiveness */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
-        {/* Fonts */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
         {/* Favicon */}
         <link rel="icon" href="/wp-content/uploads/2024/03/cropped-FAV_softvence-1-32x32.png" sizes="32x32" />
@@ -61,9 +77,9 @@ export default function RootLayout({
         <Script src="https://code.jquery.com/jquery-3.7.1.min.js" strategy="beforeInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" strategy="beforeInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" strategy="beforeInteractive" />
-        <Script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" strategy="beforeInteractive" />
-        <Script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" strategy="beforeInteractive" />
-        <Script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js" strategy="beforeInteractive" />
+        <Script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js" strategy="afterInteractive" />
+        <Script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js" strategy="afterInteractive" />
+        <Script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js" strategy="afterInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/bootstrap.bundle.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/owl.carousel.min.js" strategy="lazyOnload" />

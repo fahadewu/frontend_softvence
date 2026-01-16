@@ -20,14 +20,22 @@ export default function Preloader() {
                 Splitting();
             }
 
-            // Small delay for Splitting to process the DOM
+            // Mark first load as complete
+            const wasFirstLoad = isFirstLoad.current;
+            isFirstLoad.current = false;
+
+            // Step 1: Hide the preloader overlay first (starts its 0.8s fade-out)
+            const overlay = document.querySelector('.preloader--overlay');
+            if (overlay) {
+                overlay.classList.add('hidden');
+            }
+
+            // Step 2: Trigger reveal and text animations after a short overlap (200ms)
             setTimeout(() => {
-                // Activate parent wrapper first (triggers CSS clip-path reveal animation)
+                // Activate parent wrapper (triggers CSS clip-path reveal animation)
                 const wrapper = document.querySelector('.parent--wrapper');
                 if (wrapper) {
-                    // On first load, run the full animation
-                    if (isFirstLoad.current) {
-                        // Ensure wrapper is active (visible)
+                    if (wasFirstLoad) {
                         if (!wrapper.classList.contains('active')) {
                             wrapper.classList.add('active');
                         }
@@ -62,9 +70,9 @@ export default function Preloader() {
                     }
                 }
 
-                // Run GSAP text animations only on first load
+                // Step 3: Run GSAP text animations
                 const gsap = (window as any).gsap;
-                if (gsap && isFirstLoad.current) {
+                if (gsap && wasFirstLoad) {
                     // Animate split characters
                     const chars = document.querySelectorAll(".char");
                     if (chars.length > 0) {
@@ -112,41 +120,53 @@ export default function Preloader() {
                     }
                 }
 
-                // Refresh AOS to ensure reveal animations work
+                // Refresh AOS
                 setTimeout(() => {
                     const AOS = (window as any).AOS;
                     if (AOS) {
                         AOS.refresh();
-                        // Additional refresh after elements settle
                         setTimeout(() => {
                             AOS.refresh();
                         }, 1000);
                     }
-                }, isFirstLoad.current ? 2500 : 100);
+                }, wasFirstLoad ? 2500 : 100);
 
-                // Mark first load as complete
-                isFirstLoad.current = false;
-
-            }, 100);
+            }, 200); // Short overlap with overlay fade-out
         };
 
         // Run on load for first load, run immediately for navigation
         if (isFirstLoad.current) {
-            if (document.readyState === 'complete') {
+            // Safety timeout: reveal after 3 seconds even if window.onload hasn't fired
+            const safetyTimeout = setTimeout(() => {
+                console.log('Preloader: Safety timeout triggered');
                 handleLoad();
+            }, 3000);
+
+            const onWindowLoad = () => {
+                clearTimeout(safetyTimeout);
+                handleLoad();
+            };
+
+            if (document.readyState === 'complete') {
+                onWindowLoad();
             } else {
-                window.addEventListener('load', handleLoad);
+                window.addEventListener('load', onWindowLoad);
             }
+
+            return () => {
+                clearTimeout(safetyTimeout);
+                window.removeEventListener('load', onWindowLoad);
+            };
         } else {
             // On navigation, run immediately
             handleLoad();
         }
-
-        return () => {
-            window.removeEventListener('load', handleLoad);
-        };
     }, [pathname]);
 
-    // No visual element - preloader effect is CSS-based via .parent--wrapper clip-path
-    return null;
+    // Return a visible preloader overlay
+    return (
+        <div className="preloader--overlay">
+            <div className="preloader--spinner"></div>
+        </div>
+    );
 }
