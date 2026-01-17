@@ -2280,7 +2280,7 @@ export default function MainContent() {
 					<div className="row mt_50 blog--row">
 						<div className="col-lg-4 col-md-6 mt_20" data-aos="fade-up" data-aos-duration="1000">
 
-							<a className="blog--box" href="low-fidelity-vs-high-fidelity-prototyping-a-complete-guide/index.html">
+							<a className="blog--box" href="/blog/low-fidelity-vs-high-fidelity-prototyping-a-complete-guide/">
 								<div className="img--area">
 									<img src="https://softvence.agency/wp-content/uploads/2024/02/Frame-8631.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A179%2A230%3Bbv_resized_ipad%3A179%2A230%3Bbv_resized_desktop%3A179%2A230" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 								</div>
@@ -2296,7 +2296,7 @@ export default function MainContent() {
 						</div>
 						<div className="col-lg-4 col-md-6 mt_20" data-aos="fade-up" data-aos-duration="1000">
 
-							<a className="blog--box" href="who-are-you-affiliated-with/index.html">
+							<a className="blog--box" href="/blog/who-are-you-affiliated-with/">
 								<div className="img--area">
 									<img src="https://softvence.agency/wp-content/uploads/2024/02/blog1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A427%2A357%3Bbv_resized_ipad%3A427%2A357%3Bbv_resized_desktop%3A427%2A357" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
 								</div>
