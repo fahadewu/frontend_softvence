@@ -1,7 +1,7 @@
 !(function (e) {
     "use strict";
     e(document).ready(function () {
-        e(window).on("load", function () {
+        var initMain = function () {
             // Check if hero animations were already initialized by Preloader
             const heroAnimationsAlreadyRun = window.heroAnimationsInitialized;
 
@@ -10,7 +10,8 @@
                     e(document).on("wheel touchmove", function (o) {
                         e(".parent--wrapper").addClass("delay");
                     }),
-                    // Only run hero animations if not already initialized
+                    // Restore hero animations in main.js
+                    // Use Check to safely run only once if called multiple times or if preloader handled it (though we want main.js to handle it now)
                     !heroAnimationsAlreadyRun && gsap.timeline().from(".char", { duration: 1, opacity: 0, skewX: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
                     !heroAnimationsAlreadyRun && gsap.from(".hero--area .hero--box.branding--area p", { duration: 1, opacity: 0, skewX: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
                     !heroAnimationsAlreadyRun && gsap.from(".hero--play--area", { duration: 1.5, opacity: 0, y: 250, ease: "power1.inOut" }),
@@ -25,10 +26,16 @@
                     })
                 )) {
             }
+        };
+
+        if (document.readyState === 'complete') {
+            initMain();
+        } else {
+            e(window).on("load", initMain);
+        }
+        e(".hamburger--menu").on("click", function () {
+            e(".main--menu, .main--menu .wrapper, body").addClass("show"), e(".main--menu .menu--inner .left>ul>li>a, .menu--contact--info, .main--menu .top--header").removeClass("d-none");
         }),
-            e(".hamburger--menu").on("click", function () {
-                e(".main--menu, .main--menu .wrapper, body").addClass("show"), e(".main--menu .menu--inner .left>ul>li>a, .menu--contact--info, .main--menu .top--header").removeClass("d-none");
-            }),
             e(".menu--close").on("click", function () {
                 e(".main--menu, .main--menu .wrapper, body").removeClass("show"), e(".main--menu .menu--inner .left>ul>li>a, .menu--contact--info, .main--menu .top--header").addClass("d-none");
             }),

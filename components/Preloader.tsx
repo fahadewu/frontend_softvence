@@ -31,80 +31,46 @@ export default function Preloader() {
                 overlay.classList.add('hidden');
             }
 
-            // Step 2: Trigger reveal and text animations
+            // Step 2: Immediate content reveal (Cancel dropdown animation)
+            const wrapper = document.querySelector('.parent--wrapper') as HTMLElement;
+            if (wrapper) {
+                // Disable the transition to "cancel" the dropdown animation
+                wrapper.style.transition = 'none';
+                wrapper.style.clipPath = 'none'; // Ensure fully visible
+                // Add classes for final state visibility
+                wrapper.classList.add('active', 'delay');
+                // Ensure body is not stuck in loading state
+                document.body.classList.remove('loading');
+
+                // Dispatch event to signal animation start
+                window.dispatchEvent(new Event('preloaderComplete'));
+            }
+
+            // Step 3: Run GSAP text animations
+            const winAny = window as any;
+            const gsap = winAny.gsap;
+
+            // Only run internal animations if not already handled by main.js or if first load
+            // But we want it to run on every mount for heroes on navigation
+            // Only run internal animations if not already handled by main.js or if first load
+            // We delegate these animations back to main.js which now handles check for readiness correctly
+            if (gsap) {
+                // Mark as initialized if we were to run them, but we let main.js handle it
+                // winAny.heroAnimationsInitialized = true; 
+            }
+
+            // Refresh AOS and ScrollTrigger
             setTimeout(() => {
-                const wrapper = document.querySelector('.parent--wrapper');
-                if (wrapper) {
-                    wrapper.classList.add('active', 'delay');
-                    // Ensure body is not stuck in loading state
-                    document.body.classList.remove('loading');
+                const AOS = winAny.AOS;
+                if (AOS) {
+                    AOS.refresh();
                 }
-
-                // Step 3: Run GSAP text animations
-                const winAny = window as any;
-                const gsap = winAny.gsap;
-
-                // Only run internal animations if not already handled by main.js or if first load
-                // But we want it to run on every mount for heroes on navigation
-                if (gsap) {
-                    winAny.heroAnimationsInitialized = true;
-
-                    // Animate split characters
-                    const chars = document.querySelectorAll(".char");
-                    if (chars.length > 0) {
-                        gsap.timeline().from(".char", {
-                            duration: 1,
-                            opacity: 0,
-                            skewX: 7, // Fixed: GSAP 3 uses skewX instead of skew
-                            stagger: 0.02,
-                            y: 200,
-                            ease: "power1.inOut"
-                        });
-                    }
-
-                    // Animate branding paragraph
-                    const brandingPara = document.querySelector(".hero--area .hero--box.branding--area p");
-                    if (brandingPara) {
-                        gsap.from(".hero--area .hero--box.branding--area p", {
-                            duration: 1,
-                            opacity: 0,
-                            skewX: 7, // Fixed: GSAP 3 uses skewX instead of skew
-                            stagger: 0.02,
-                            y: 200,
-                            ease: "power1.inOut"
-                        });
-                    }
-
-                    // Animate play area
-                    const playArea = document.querySelector(".hero--play--area");
-                    if (playArea) {
-                        gsap.from(".hero--play--area", {
-                            duration: 1.5,
-                            opacity: 0,
-                            y: 250,
-                            ease: "power1.inOut"
-                        });
-                    }
-
-                    // Animate circle hero
-                    const circleHero = document.querySelector(".circle--hero");
-                    if (circleHero) {
-                        gsap.fromTo(".circle--hero",
-                            { opacity: 0 },
-                            { duration: 1, opacity: 1, delay: 1, ease: "power1.inOut" }
-                        );
-                    }
+                const ScrollTrigger = winAny.ScrollTrigger;
+                if (ScrollTrigger) {
+                    ScrollTrigger.refresh();
                 }
+            }, 100);
 
-                // Refresh AOS
-                setTimeout(() => {
-                    const AOS = winAny.AOS;
-                    if (AOS) {
-                        AOS.refresh();
-                    }
-                }, 100);
-
-            }, wasFirstLoad ? 200 : 0);
         };
 
         // Run on load for first load, run immediately for navigation

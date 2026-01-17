@@ -17,10 +17,17 @@ export default function ServiceProcessScroll({ serviceTitle, processSteps }: Ser
     const horizontalRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        // Dynamic import for GSAP to avoid SSR issues
-        const initGsap = async () => {
-            const gsap = (await import('gsap')).default;
-            const ScrollTrigger = (await import('gsap/ScrollTrigger')).default;
+        let ctx: any;
+
+        const initGsap = () => {
+            const winAny = window as any;
+            const gsap = winAny.gsap;
+            const ScrollTrigger = winAny.ScrollTrigger;
+
+            if (!gsap || !ScrollTrigger) {
+                setTimeout(initGsap, 100);
+                return;
+            }
 
             gsap.registerPlugin(ScrollTrigger);
 
@@ -29,47 +36,72 @@ export default function ServiceProcessScroll({ serviceTitle, processSteps }: Ser
 
             if (horizontal && scrollContainer) {
                 // Ensure proper cleaning before creating new animation
+                // With gsap.context, manual kill of previous triggers in the same scope is handled automatically if we revert context,
+                // but checking for existing global triggers on these elements is still safe.
                 const triggers = ScrollTrigger.getAll();
-                triggers.forEach(trigger => {
+                triggers.forEach((trigger: any) => {
                     if (trigger.vars.trigger === horizontal || trigger.vars.trigger === ".horizontal") {
                         trigger.kill();
                     }
                 });
 
-                // Helper function to calculate scroll width minus viewport width
+                ctx = gsap.context(() => {
+                    const mm = gsap.matchMedia();
+
+                    mm.add("(min-width: 992px)", () => {
+                        gsap.to(horizontal, {
+                            x: () => -1 * horizontal.scrollWidth,
+                            xPercent: 100,
+                            ease: "none",
+                            scrollTrigger: {
+                                trigger: horizontal,
+                                start: "top center",
+                                end: "+=2000px",
+                                pin: scrollContainer,
+                                scrub: 1,
+                                invalidateOnRefresh: true,
+                            }
+                        });
+                    });
+                }, scrollContainer);
+
+                // Helper function to calculate scroll width minus viewport width (kept for reference if needed in future logic)
                 const getScrollAmount = () => {
                     return -(horizontal.scrollWidth - window.innerWidth);
-                };
-
-                // Only enable horizontal scroll on desktop
-                const mm = gsap.matchMedia();
-
-                mm.add("(min-width: 992px)", () => {
-                    gsap.to(horizontal, {
-                        x: () => -1 * horizontal.scrollWidth,
-                        xPercent: 100, // Offset initial position if needed, or rely on x calc
-                        ease: "none",
-                        scrollTrigger: {
-                            trigger: horizontal,
-                            start: "top center", // Adjusted start position
-                            end: "+=2000px", // Scroll distance
-                            pin: scrollContainer, // Pin the parent container
-                            scrub: 1,
-                            invalidateOnRefresh: true,
-                            // markers: true // Uncomment for debugging
-                        }
-                    });
-                });
-
-                return () => {
-                    mm.revert(); // Cleanup matchMedia
                 };
             }
         };
 
-        // Initialize GSAP
-        initGsap();
+        if (typeof window !== 'undefined') {
+            const preloader = document.querySelector('.preloader--overlay');
+            const isPreloaderHidden = preloader && preloader.classList.contains('hidden');
 
+            if (preloader && !isPreloaderHidden) {
+                const onPreloaderComplete = () => {
+                    initGsap();
+                    window.removeEventListener('preloaderComplete', onPreloaderComplete);
+                };
+                window.addEventListener('preloaderComplete', onPreloaderComplete);
+
+                // Safety fallback
+                setTimeout(() => {
+                    if (!ctx) initGsap();
+                }, 3000);
+
+                return () => window.removeEventListener('preloaderComplete', onPreloaderComplete);
+            } else {
+                if (document.readyState === 'complete') {
+                    initGsap();
+                } else {
+                    window.addEventListener('load', initGsap);
+                    return () => window.removeEventListener('load', initGsap);
+                }
+            }
+        }
+
+        return () => {
+            if (ctx) ctx.revert();
+        };
     }, [processSteps]); // Re-run if steps change
 
     return (

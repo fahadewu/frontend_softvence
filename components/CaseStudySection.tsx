@@ -2,8 +2,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function CaseStudySection() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -11,31 +9,74 @@ export default function CaseStudySection() {
     const [filter, setFilter] = useState('*');
 
     useEffect(() => {
-        if (typeof window !== 'undefined') {
+        let ctx: any;
+        let initInterval: NodeJS.Timeout;
+
+        const initAnimation = () => {
+            const winAny = window as any;
+            const gsap = winAny.gsap;
+            const ScrollTrigger = winAny.ScrollTrigger;
+
+            if (!gsap || !ScrollTrigger) {
+                return false;
+            }
+
+            // Only register if not already done (gsap handles this safely though)
             gsap.registerPlugin(ScrollTrigger);
 
             const section = sectionRef.current;
             const circle = circleRef.current;
 
-            if (section && circle) {
-                // Animation
-                // Animation matching softvence.agency with sharp rendering fix
-                gsap.fromTo(circle,
-                    { width: 0, height: 0 },
-                    {
-                        width: '10000px',
-                        height: '10000px',
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: section,
-                            start: '-8% center',
-                            end: 'center center',
-                            scrub: 0.5,
+            if (section && circle && !ctx) {
+                ctx = gsap.context(() => {
+                    gsap.fromTo(circle,
+                        { width: 0, height: 0 },
+                        {
+                            width: '10000px',
+                            height: '10000px',
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: section,
+                                start: '-8% center',
+                                end: 'center center',
+                                scrub: 0.5,
+                                invalidateOnRefresh: true,
+                            }
                         }
-                    }
-                );
+                    );
+                }, section);
+                return true;
             }
+            return !!ctx;
+        };
+
+        if (typeof window !== 'undefined') {
+            // Robust Polling Strategy:
+            // Attempt to initialize every 200ms until successful or timeout
+            // Also force refresh for a few seconds to handle layout shifts
+            let attempts = 0;
+            const maxAttempts = 20; // 4 seconds
+
+            initInterval = setInterval(() => {
+                attempts++;
+                const success = initAnimation();
+
+                if (success) {
+                    // Force refresh to catch layout updates
+                    const winAny = window as any;
+                    if (winAny.ScrollTrigger) winAny.ScrollTrigger.refresh();
+                }
+
+                if (attempts >= maxAttempts) {
+                    clearInterval(initInterval);
+                }
+            }, 200);
         }
+
+        return () => {
+            if (initInterval) clearInterval(initInterval);
+            if (ctx) ctx.revert();
+        };
     }, []);
 
     const handleFilterClick = (filterValue: string) => {
