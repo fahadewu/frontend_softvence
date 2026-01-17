@@ -2470,10 +2470,10 @@ footer {
     /* avoid capturing clicks — visual-only element */
     z-index: 3;
     /* above image but below other UI */
-    background-color: #fff;
+    background-color: var(--primary-color);
     border-radius: 50%;
     text-align: center;
-    color: #000;
+    color: var(--white);
     font-size: 12px;
     font-weight: 600;
     line-height: 1.2;

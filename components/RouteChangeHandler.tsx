@@ -62,14 +62,18 @@ export default function RouteChangeHandler() {
         if (typeof window !== 'undefined') {
             const ensurejQuery = (attempts = 0) => {
                 const $ = (window as any).jQuery;
-                if (!$) {
-                    if (attempts < 10) {
+                const hasOwl = $ && $.fn && $.fn.owlCarousel;
+
+                if (!hasOwl) {
+                    if (attempts < 15) {
                         setTimeout(() => ensurejQuery(attempts + 1), 200);
                     } else {
-                        console.warn('jQuery not available after retries, skipping jQuery reinitialization.');
+                        console.warn(`jQuery or owlCarousel not available after ${attempts} retries. (jQuery: ${!!$}, owlCarousel: ${!!($.fn && $.fn.owlCarousel)})`);
                     }
                     return;
                 }
+
+                console.log(`Reinitializing jQuery components (attempt ${attempts + 1})...`);
 
                 try {
                     // Destroy existing carousels first to prevent duplicates

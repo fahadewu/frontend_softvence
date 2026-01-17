@@ -11,8 +11,8 @@ export default function ContactPopup() {
 
 						<div className="pop--header">
 
-							<a href="index.html" className="pop--logo">
-								<img loading="lazy" src="#" alt="logo" />
+							<a href="/" className="pop--logo">
+								<img loading="lazy" src="/assets/images/logo.jpg" alt="logo" />
 							</a>
 
 							<div className="pop-close">

@@ -82,12 +82,12 @@ export default function RootLayout({
         <Script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.min.js" strategy="afterInteractive" />
         <Script src="https://cdnjs.cloudflare.com/ajax/libs/tilt.js/1.2.1/tilt.jquery.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/bootstrap.bundle.min.js" strategy="lazyOnload" />
-        <Script src="/assets/js/owl.carousel.min.js" strategy="lazyOnload" />
+        <Script src="/assets/js/owl.carousel.min.js" strategy="afterInteractive" />
         <Script src="/assets/js/jquery.nice-select.min.js" strategy="lazyOnload" />
         <Script src="/assets/js/splitting.min.js" strategy="beforeInteractive" />
         <Script src="/assets/js/aos.js" strategy="beforeInteractive" />
         <Script src="/assets/js/jquery.magnific-popup.min.js" strategy="lazyOnload" />
-        <Script src="/assets/js/main.js" strategy="lazyOnload" />
+        <Script src="/assets/js/main.js" strategy="afterInteractive" />
       </body>
     </html>
   );

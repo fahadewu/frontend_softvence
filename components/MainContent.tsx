@@ -12,13 +12,18 @@ export default function MainContent() {
 
 	useEffect(() => {
 		// Refresh AOS after component mounts to ensure animations work
-		const timer = setTimeout(() => {
-			if (typeof window !== 'undefined' && (window as any).AOS) {
-				(window as any).AOS.refresh();
-			}
-		}, 100);
-
-		return () => clearTimeout(timer);
+		if (typeof window !== 'undefined' && (window as any).AOS) {
+			const AOS = (window as any).AOS;
+			AOS.init({
+				duration: 1000,
+				once: true,
+				easing: 'ease-in-out',
+			});
+			// Refresh multiple times to catch Owl Carousel DOM stabilization
+			setTimeout(() => AOS.refresh(), 100);
+			setTimeout(() => AOS.refresh(), 1000);
+			setTimeout(() => AOS.refresh(), 2000);
+		}
 	}, []);
 
 	// Initialize Lottie animations for "How We Work" section
