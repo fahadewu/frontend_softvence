@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import servicesData from '@/data/services.json';
 import caseStudiesData from '@/data/caseStudies.json';
 import Image from 'next/image';
+import ServiceProcessScroll from '@/components/ServiceProcessScroll';
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
@@ -294,41 +295,7 @@ export default function ServiceDetailPage() {
         </section>
 
         {/* Design Process */}
-        <section className="design--process--area service--design--process section-dark section">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-3 mt_20">
-                <div className="single--title">
-                  <h3 className="common--sub--heading mt_10" data-aos="fade-up" data-aos-duration="1000">
-                    {service.title.toUpperCase()}<br /> DESIGN PROCESS
-                  </h3>
-                </div>
-              </div>
-              <div className="col-lg-9 mt_20">
-                <div className="about--right--text">
-                  <h3 className="common--heading" data-aos="fade-up" data-aos-duration="1000">
-                    Embark on a journey of strategic planning and<br />
-                    <span className="primary--color">creative execution with our process.</span>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div id="horizontal-scoll">
-            <div className="horizontal-scoll-wrapper">
-              <div className="horizontal">
-                {service.process.map((step: any, index: number) => (
-                  <div key={index}>
-                    <div className="design--card" data-aos="fade-In" data-aos-duration="700">
-                      <h4>{index + 1}. {step.title}</h4>
-                      <p>{step.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
+        <ServiceProcessScroll serviceTitle={service.title} processSteps={service.process} />
 
         {/* FAQ Section */}
         <section className="faq--area service--faq section-light section" data-aos="fade-In" data-aos-duration="1800">

@@ -11,8 +11,8 @@
                         e(".parent--wrapper").addClass("delay");
                     }),
                     // Only run hero animations if not already initialized
-                    !heroAnimationsAlreadyRun && gsap.timeline().from(".char", { duration: 1, opacity: 0, skew: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
-                    !heroAnimationsAlreadyRun && gsap.from(".hero--area .hero--box.branding--area p", { duration: 1, opacity: 0, skew: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
+                    !heroAnimationsAlreadyRun && gsap.timeline().from(".char", { duration: 1, opacity: 0, skewX: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
+                    !heroAnimationsAlreadyRun && gsap.from(".hero--area .hero--box.branding--area p", { duration: 1, opacity: 0, skewX: 7, stagger: 0.02, y: 200, ease: "power1.inOut" }),
                     !heroAnimationsAlreadyRun && gsap.from(".hero--play--area", { duration: 1.5, opacity: 0, y: 250, ease: "power1.inOut" }),
                     !heroAnimationsAlreadyRun && gsap.fromTo(".circle--hero", { opacity: 0 }, { duration: 1, opacity: 1, delay: 1, ease: "power1.inOut" }),
                     gsap.from(".about--image--wrapper", { duration: 1.5, opacity: 0, y: 250, ease: "power1.inOut" }),
@@ -22,12 +22,8 @@
                         y: 250,
                         stagger: 0.4,
                         ease: "power1.inOut",
-                    }),
-                    window.matchMedia("(min-width: 992px)").matches && e(".horizontal").length > 0)
-            ) {
-                let o;
-                (o = document.querySelector(".horizontal")),
-                    gsap.to(".horizontal", { x: () => -1 * o.scrollWidth, xPercent: 100, scrollTrigger: { trigger: ".horizontal", start: "7% center", end: "+=1000px", pin: ".design--process--area", scrub: !0, invalidateOnRefresh: !0 } });
+                    })
+                )) {
             }
         }),
             e(".hamburger--menu").on("click", function () {

@@ -14,9 +14,10 @@ export default function Preloader() {
                 window.scrollTo(0, 0);
             }
 
-            // Initialize Splitting.js only once on first load
+            // Initialize Splitting.js
             const Splitting = (window as any).Splitting;
-            if (Splitting && isFirstLoad.current) {
+            if (Splitting) {
+                // Always call Splitting to ensure new content is processed on navigation
                 Splitting();
             }
 
@@ -24,70 +25,37 @@ export default function Preloader() {
             const wasFirstLoad = isFirstLoad.current;
             isFirstLoad.current = false;
 
-            // Step 1: Hide the preloader overlay first (starts its 0.8s fade-out)
+            // Step 1: Hide the preloader overlay
             const overlay = document.querySelector('.preloader--overlay');
             if (overlay) {
                 overlay.classList.add('hidden');
             }
 
-            // Step 2: Trigger reveal and text animations after a short overlap (200ms)
+            // Step 2: Trigger reveal and text animations
             setTimeout(() => {
-                // Activate parent wrapper (triggers CSS clip-path reveal animation)
                 const wrapper = document.querySelector('.parent--wrapper');
                 if (wrapper) {
-                    if (wasFirstLoad) {
-                        if (!wrapper.classList.contains('active')) {
-                            wrapper.classList.add('active');
-                        }
-
-                        // Add delay class after clip-path animation or on user interaction
-                        const enableScroll = () => {
-                            if (wrapper) {
-                                wrapper.classList.add('delay');
-                            }
-                            // Remove loading class from body to enable scrolling
-                            document.body.classList.remove('loading');
-
-                            // Refresh AOS and ScrollTrigger once content is relative and scrollable
-                            const AOS = (window as any).AOS;
-                            if (AOS) AOS.refresh();
-                            const gsap = (window as any).gsap;
-                            if (gsap && gsap.registerPlugin && (window as any).ScrollTrigger) {
-                                (window as any).ScrollTrigger.refresh();
-                            }
-                        };
-
-                        // Enable scroll on user interaction
-                        const interactionEvents = ['wheel', 'touchmove'];
-                        const addDelayOnInteraction = () => {
-                            enableScroll();
-                            interactionEvents.forEach(event => {
-                                document.removeEventListener(event, addDelayOnInteraction);
-                            });
-                        };
-
-                        interactionEvents.forEach(event => {
-                            document.addEventListener(event, addDelayOnInteraction, { once: true });
-                        });
-
-                        // Also enable after clip-path animation completes (2s)
-                        setTimeout(enableScroll, 2100);
-                    } else {
-                        // On subsequent navigations, ensure classes are set immediately
-                        wrapper.classList.add('active', 'delay');
-                    }
+                    wrapper.classList.add('active', 'delay');
+                    // Ensure body is not stuck in loading state
+                    document.body.classList.remove('loading');
                 }
 
                 // Step 3: Run GSAP text animations
-                const gsap = (window as any).gsap;
-                if (gsap && wasFirstLoad) {
+                const winAny = window as any;
+                const gsap = winAny.gsap;
+
+                // Only run internal animations if not already handled by main.js or if first load
+                // But we want it to run on every mount for heroes on navigation
+                if (gsap) {
+                    winAny.heroAnimationsInitialized = true;
+
                     // Animate split characters
                     const chars = document.querySelectorAll(".char");
                     if (chars.length > 0) {
                         gsap.timeline().from(".char", {
                             duration: 1,
                             opacity: 0,
-                            skew: 7,
+                            skewX: 7, // Fixed: GSAP 3 uses skewX instead of skew
                             stagger: 0.02,
                             y: 200,
                             ease: "power1.inOut"
@@ -100,7 +68,7 @@ export default function Preloader() {
                         gsap.from(".hero--area .hero--box.branding--area p", {
                             duration: 1,
                             opacity: 0,
-                            skew: 7,
+                            skewX: 7, // Fixed: GSAP 3 uses skewX instead of skew
                             stagger: 0.02,
                             y: 200,
                             ease: "power1.inOut"
@@ -130,16 +98,13 @@ export default function Preloader() {
 
                 // Refresh AOS
                 setTimeout(() => {
-                    const AOS = (window as any).AOS;
+                    const AOS = winAny.AOS;
                     if (AOS) {
                         AOS.refresh();
-                        setTimeout(() => {
-                            AOS.refresh();
-                        }, 1000);
                     }
-                }, wasFirstLoad ? 2500 : 100);
+                }, 100);
 
-            }, 200); // Short overlap with overlay fade-out
+            }, wasFirstLoad ? 200 : 0);
         };
 
         // Run on load for first load, run immediately for navigation
