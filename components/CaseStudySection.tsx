@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import caseStudiesData from '@/data/caseStudies.json';
 
 export default function CaseStudySection() {
     const sectionRef = useRef<HTMLElement>(null);
@@ -92,78 +93,11 @@ export default function CaseStudySection() {
         { name: 'Web Development', value: '.web-develop' }
     ];
 
-    const caseStudies = [
-        {
-            title: 'Oneisone Entertainment',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-02.png',
-            link: '/case-studies/oneisone-entertainment-2',
-            classes: 'ui-ux vibe-coding'
-        },
-        {
-            title: 'Website Development for a Modern',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/Web-Development-Cover-01.png',
-            link: '/case-studies/website-development-for-a-modern',
-            classes: 'ui-ux web-develop'
-        },
-        {
-            title: 'Social & Event Networking App',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/download-88-1.png',
-            link: '/case-studies/connectly-social-event-networking-app',
-            classes: 'mobile-app ui-ux'
-        },
-        {
-            title: 'E-commerce Website Dashboard',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio-M1.jpg',
-            link: '/case-studies/e-commerce-website-dashboard-ui-design',
-            classes: 'ui-ux web-develop'
-        },
-        {
-            title: 'Website Development',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-03.png',
-            link: '/case-studies/website-development',
-            classes: 'ui-ux vibe-coding'
-        },
-        {
-            title: 'Theta Analyzers',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/Dashboard-Cover.png',
-            link: '/case-studies/theta-analyzers',
-            classes: 'ui-ux'
-        },
-        {
-            title: 'Harmonize – Venue Booking App',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio1-1-scaled.jpg',
-            link: '/case-studies/harmonize-venue-booking-app',
-            classes: 'mobile-app'
-        },
-        {
-            title: 'Crafting Business',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/06/working-with-calculator.jpg',
-            link: '/case-studies/crafting-brand',
-            classes: 'branding ui-ux web-develop'
-        },
-        {
-            title: 'Bank Made',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2025/06/Futuristic-Abstract-Design.jpg',
-            link: '/case-studies/bank-made',
-            classes: 'branding ui-ux'
-        },
-        {
-            title: 'Colin Wolf Pack',
-            category: 'Branding & Design',
-            image: 'https://softvence.agency/wp-content/uploads/2024/03/Thumnail-collin.png',
-            link: '/case-studies/colin-wolf-pack',
-            classes: 'branding mobile-app ui-ux web-develop'
-        }
-    ];
+    const allCaseStudies = caseStudiesData.caseStudies;
+
+    const filteredCases = filter === '*'
+        ? allCaseStudies.slice(0, 6)
+        : allCaseStudies.filter(item => item.categories.some((c: string) => c.toLowerCase().includes(filter.replace('.', ''))));
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.currentTarget;
@@ -189,10 +123,6 @@ export default function CaseStudySection() {
         }
     };
 
-    const filteredCases = filter === '*'
-        ? caseStudies
-        : caseStudies.filter(item => item.classes.includes(filter.replace('.', '')));
-
     return (
         <section ref={sectionRef} className="case--studies--area home--case section section-dark">
             <div ref={circleRef} className="scale--circle"></div>
@@ -215,7 +145,6 @@ export default function CaseStudySection() {
                                             onClick={() => handleFilterClick(item.value)}
                                             data-filter={item.value}
                                         >
-                                            {/* Icons can be added back if needed, simplifying for now or copying SVGs */}
                                             {item.name}
                                         </li>
                                     ))}
@@ -224,8 +153,8 @@ export default function CaseStudySection() {
 
                             <div className="row case-gallery">
                                 {filteredCases.map((item, index) => (
-                                    <div key={index} className={`col-md-6 mt_85 ${item.classes}`}>
-                                        <a href={item.link} className="case--item">
+                                    <div key={index} className={`col-md-6 mt_85 ${item.categories.join(' ')}`}>
+                                        <a href={`/case-studies/${item.slug}`} className="case--item">
                                             <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
                                                 <div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom"></div>
                                                 <img
@@ -240,7 +169,7 @@ export default function CaseStudySection() {
                                             </div>
                                             <div className="content">
                                                 <h3>{item.title}</h3>
-                                                <p>{item.category}</p>
+                                                <p>{item.description}</p>
                                             </div>
                                         </a>
                                     </div>
@@ -251,7 +180,7 @@ export default function CaseStudySection() {
                 </div>
                 <div className="row mt-5">
                     <div className="col-md-12 text-center" data-aos="fade-up" data-aos-duration="1000">
-                        <Link href="/work" className="button buttonv2 button-click">View All Case Studies</Link>
+                        <a href="/work" className="button buttonv2 button-click">View All Case Studies</a>
                     </div>
                 </div>
             </div>

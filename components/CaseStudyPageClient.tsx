@@ -9,19 +9,22 @@ import ContactPopup from './ContactPopup';
 interface CaseStudy {
     slug: string;
     title: string;
-    categories: string;
+    categories: string[] | string;
     image?: string;
+    sections?: any[];
 }
 
 interface CaseStudyPageClientProps {
     htmlContent: string;
-    relatedCaseStudies: CaseStudy[];
-    prevCaseStudy: CaseStudy | null;
-    nextCaseStudy: CaseStudy | null;
+    caseStudyData: any;
+    relatedCaseStudies: any[];
+    prevCaseStudy: any | null;
+    nextCaseStudy: any | null;
 }
 
 export default function CaseStudyPageClient({
     htmlContent,
+    caseStudyData,
     relatedCaseStudies,
     prevCaseStudy,
     nextCaseStudy
@@ -95,14 +98,274 @@ export default function CaseStudyPageClient({
                 }
             }, 1000);
         }
-    }, []);
+    }, [caseStudyData]);
+
+    const renderSections = () => {
+        if (!caseStudyData || !caseStudyData.sections) return null;
+
+        return caseStudyData.sections.map((section: any, index: number) => {
+            switch (section.type) {
+                case 'hero':
+                    return (
+                        <section key={index} className="case--study--hero--area section section-dark">
+                            <div className="case--hero--bg"></div>
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <div className="case--hero--content text-center">
+                                            <p className="common--sub--heading" data-aos="fade-up" data-aos-duration="1000">{section.subHeading}</p>
+                                            <h1 className="common--heading" data-aos="fade-up" data-aos-duration="1000">{section.heading}</h1>
+                                            <div className="case--hero--img">
+                                                <img src={section.image} className="w-100" alt={section.heading} />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'projectInfo':
+                    return (
+                        <section key={index} className="project--details--area section section-light">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="details--top">
+                                        <div className="row">
+                                            <div className="col-md-5 mt_30">
+                                                <div className="project--info">
+                                                    <div className="info" data-aos="fade-up" data-aos-duration="700">
+                                                        <p>Client</p>
+                                                        <h4>{section.client}</h4>
+                                                    </div>
+                                                    <div className="info" data-aos="fade-up" data-aos-duration="700">
+                                                        <p>Category</p>
+                                                        <h4>{section.category}</h4>
+                                                    </div>
+                                                    {section.liveUrl && (
+                                                        <div className="info" data-aos="fade-up" data-aos-duration="700">
+                                                            <p>Live Website</p>
+                                                            <a href={section.liveUrl} target="_blank" rel="noopener noreferrer">{section.client} Website</a>
+                                                        </div>
+                                                    )}
+                                                    <div className="info" data-aos="fade-up" data-aos-duration="700">
+                                                        <p>Services We Provided</p>
+                                                        {(Array.isArray(section.services) ? section.services : (section.services || "").split(",")).map((s: string, i: number) => (
+                                                            <h4 key={i}>{s.trim()}</h4>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-7 mt_30">
+                                                <div className="project--details--desc">
+                                                    <h3 className="common--sub--heading text-uppercase" data-aos="fade-up" data-aos-duration="700">Project Details</h3>
+                                                    <h4 className="mt_40" data-aos="fade-up" data-aos-duration="700" dangerouslySetInnerHTML={{ __html: section.description }} />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'fullWidthImage':
+                    return (
+                        <section key={index} className="section section-light pt-0">
+                            <div className="container">
+                                <div className="col-md-12">
+                                    <div className="case--study--single--img" data-aos="fade-up" data-aos-duration="700">
+                                        <img src={section.image} className="w-100" alt="Featured" />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'problemChallengesSolution':
+                    return (
+                        <section key={index} className="section section-light pt-0">
+                            <div className="container">
+                                <div className="details--bottom">
+                                    <div className="problem--statement">
+                                        <div className="row">
+                                            <div className="col-md-3 mt_20">
+                                                <h4 className="common--sub--heading" data-aos="fade-up" data-aos-duration="700">Problem</h4>
+                                            </div>
+                                            <div className="col-md-9 mt_20">
+                                                <div className="desc">
+                                                    <p data-aos="fade-up" data-aos-duration="700">{section.problem}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="challenges--area mt_80">
+                                        <div className="row">
+                                            <div className="col-md-3 mt_20">
+                                                <h4 className="common--sub--heading" data-aos="fade-up" data-aos-duration="700">Challenges</h4>
+                                            </div>
+                                            <div className="col-md-9 mt_20">
+                                                <div className="desc">
+                                                    <p data-aos="fade-up" data-aos-duration="700" style={{ whiteSpace: 'pre-line' }}>{section.challenges}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="solution--area mt_80">
+                                        <div className="row">
+                                            <div className="col-md-3 mt_20">
+                                                <h4 className="common--sub--heading" data-aos="fade-up" data-aos-duration="700">Solution</h4>
+                                            </div>
+                                            <div className="col-md-9 mt_20">
+                                                <div className="desc">
+                                                    <p data-aos="fade-up" data-aos-duration="700">{section.solution}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'gallery':
+                    return (
+                        <section key={index} className="case--overview--gallery section section-light pt-0">
+                            <div className="container">
+                                <div className="row">
+                                    {(section.images || []).filter((img: string) => img && img.trim() !== "").map((img: string, i: number) => (
+                                        <div key={i} className="col-md-6 mt_30">
+                                            <div className="img--area" data-aos="fade-up" data-aos-duration="700">
+                                                <img src={img} className="w-100" alt={`Gallery ${i}`} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'testimonial':
+                    return (
+                        <section key={index} className="section section-light pt-0 pb-0">
+                            <div className="container">
+                                <div className="details--bottom">
+                                    <div className="single--testimonial" data-aos="fade-up" data-aos-duration="700">
+                                        <h4>WHAT THE CLIENT SAYS</h4>
+                                        <div className="testi--body">
+                                            <p>{section.quote}</p>
+                                            <div className="client--profile d-flex align-items-center">
+                                                {section.clientImage && (
+                                                    <img src={section.clientImage} alt={section.clientName} />
+                                                )}
+                                                <p>{section.clientName} <span>{section.clientRole}</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                case 'designProcess':
+                    return (
+                        <section key={index} className="design--process--area section section-dark">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-3 mt_20">
+                                        <div className="single--title">
+                                            <h3 className="common--sub--heading mt_10" data-aos="fade-up" data-aos-duration="1000">DESIGN PROCESS</h3>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-9 mt_20">
+                                        <div className="about--right--text">
+                                            <h3 className="common--heading" data-aos="fade-up" data-aos-duration="1000">{section.headline}</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {section.steps && section.steps.length > 0 && (
+                                <div id="horizontal-scoll">
+                                    <div className="horizontal-scoll-wrapper">
+                                        <div className="horizontal">
+                                            {section.steps.map((step: any, i: number) => (
+                                                <div key={i}>
+                                                    <div className="design--card" data-aos="fade-In" data-aos-duration="700">
+                                                        <h4>{i + 1}. {step.title}</h4>
+                                                        <p>{step.description}</p>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </section>
+                    );
+                case 'visualDesigns':
+                    return (
+                        <section key={index} className="visual--design--area section section-light">
+                            <div className="container">
+                                <div className="row">
+                                    <div className="col-md-3 mt_20">
+                                        <div className="single--title">
+                                            <h3 className="common--sub--heading mt_10" data-aos="fade-up" data-aos-duration="1000">VISUAL DESIGNS</h3>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-9 mt_20">
+                                        <div className="about--right--text">
+                                            <h3 className="common--heading" data-aos="fade-up" data-aos-duration="1000">{section.headline}</h3>
+                                        </div>
+                                    </div>
+
+                                    <div className="visual--screen">
+                                        <div className="row mt_85">
+                                            {(section.images || []).filter((img: string) => img && img.trim() !== "").map((img: string, i: number) => {
+                                                let colClass = "col-md-4";
+                                                let imgBoxClass = "";
+
+                                                // Pattern: 2 small (col-6), 1 big (col-12), 2 semi (col-5/col-7)
+                                                const mod = i % 5;
+                                                if (mod === 0 || mod === 1) {
+                                                    colClass = "col-md-6 mt_20";
+                                                    imgBoxClass = "img--small";
+                                                } else if (mod === 2) {
+                                                    colClass = "col-md-12 mt_20";
+                                                    imgBoxClass = "img--big";
+                                                } else if (mod === 3) {
+                                                    colClass = "col-md-5 mt_20";
+                                                    imgBoxClass = "img--semi";
+                                                } else if (mod === 4) {
+                                                    colClass = "col-md-7 mt_20";
+                                                    imgBoxClass = "img--semi";
+                                                }
+
+                                                return (
+                                                    <div key={i} className={colClass} data-aos={mod % 2 === 0 ? "fade-right" : "fade-left"} data-aos-duration="700">
+                                                        <div className={`visual--image ${imgBoxClass}`}>
+                                                            <img src={img} className="w-100" alt={`Visual ${i}`} />
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    );
+                default:
+                    return null;
+            }
+        });
+    };
 
     return (
         <div id="page" className="site">
             <div className="parent--wrapper">
                 <Header />
                 <main>
-                    <div className="case-study-content" dangerouslySetInnerHTML={{ __html: htmlContent }} suppressHydrationWarning />
+                    {caseStudyData?.sections ? (
+                        <div className="case-study-dynamic-content">
+                            {renderSections()}
+                        </div>
+                    ) : (
+                        <div className="case-study-content" dangerouslySetInnerHTML={{ __html: htmlContent }} suppressHydrationWarning />
+                    )}
 
                     {/* Related Case Studies */}
                     {relatedCaseStudies.length > 0 && (

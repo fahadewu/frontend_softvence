@@ -72,9 +72,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     // Remove navigation sections if they exist
     mainContent = mainContent.replace(/<div[^>]*class="[^"]*case-study-navigation[^"]*"[\s\S]*?<\/div>/gi, '');
 
-    // Fix image paths: Use bv-data-src as src if available
-    mainContent = mainContent.replace(/<img([^>]*)bv-data-src="([^"]+)"([^>]*)>/g, (match, p1, p2, p3) => {
-        return `<img src="${p2}" ${p1} ${p3} />`;
+    // Fix image paths: Use bv-data-src as src if available - more robust regex for any tag
+    mainContent = mainContent.replace(/<([a-z0-9]+)([\s\S]*?)bv-data-src="([^"]+)"([\s\S]*?)>/gi, (match, tag, p1, p2, p3) => {
+        return `<${tag} src="${p2}" ${p1} ${p3} />`;
     });
 
     // Fix any relative wp-content/assets paths
@@ -98,9 +98,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
     // Simple trim only - avoid aggressive whitespace removal
     mainContent = mainContent.trim();
 
+    // Get current case study full data
+    const currentCaseStudy = caseStudiesData.caseStudies[currentIndex];
+
     return (
         <CaseStudyPageClient
             htmlContent={mainContent}
+            caseStudyData={currentCaseStudy}
             relatedCaseStudies={relatedCaseStudies}
             prevCaseStudy={prevCaseStudy}
             nextCaseStudy={nextCaseStudy}

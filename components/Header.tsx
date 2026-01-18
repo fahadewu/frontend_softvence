@@ -32,9 +32,9 @@ export default function Header() {
                 <div className={`wrapper ${isMenuOpen ? 'show' : ''}`}>
                     <div className="container">
                         <div className={`top--header d-flex align-items-center justify-content-between ${!isMenuOpen ? 'd-none' : ''}`}>
-                            <Link href="/" className="popup-menu" onClick={closeMenu}>
+                            <a href="/" className="popup-menu" onClick={closeMenu}>
                                 <img loading="lazy" style={{ height: '50px', width: "200px" }} className="img-fluid" src="/assets/images/logo.jpg" alt="logo" />
-                            </Link>
+                            </a>
                             <div className="menu--close--area">
                                 <Link href="/contact" className="contact--toggle" onClick={closeMenu}>Let's talk!</Link>
                                 <div className="menu--close" onClick={closeMenu}>
@@ -49,13 +49,13 @@ export default function Header() {
                             <div className="left">
                                 <ul id="menu-main-menu" className="softvence-menu">
                                     <li className={`menu-item menu-item-type-post_type menu-item-object-page menu-item-home ${!isMenuOpen ? 'd-none' : ''}`}>
-                                        <Link href="/" onClick={closeMenu}>Home</Link>
+                                        <a href="/">Home</a>
                                     </li>
                                     <li className={`menu-item menu-item-type-post_type menu-item-object-page ${!isMenuOpen ? 'd-none' : ''}`}>
-                                        <Link href="/about-us" onClick={closeMenu}>About Us</Link>
+                                        <a href="/about-us">About Us</a>
                                     </li>
                                     <li className={`menu-item menu-item-type-post_type menu-item-object-page ${!isMenuOpen ? 'd-none' : ''}`}>
-                                        <Link href="/work" onClick={closeMenu}>Work</Link>
+                                        <a href="/work">Work</a>
                                     </li>
                                     <li className={`menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children service--dropdown ${!isMenuOpen ? 'd-none' : ''}`}>
                                         <a href="#">Services
@@ -66,15 +66,15 @@ export default function Header() {
                                             </div>
                                         </a>
                                         <ul className="dropdown--menu">
-                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><Link href="/services/brand-identity-design" onClick={closeMenu}>Brand Identity Design</Link></li>
-                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><Link href="/services/ux-ui-design" onClick={closeMenu}>UX/UI Design</Link></li>
-                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><Link href="/services/web-development" onClick={closeMenu}>Web Development</Link></li>
-                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><Link href="/services/mobile-app-development" onClick={closeMenu}>Mobile App Development</Link></li>
-                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><Link href="/services/consultation" onClick={closeMenu}>Consultation</Link></li>
+                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><a href="/services/brand-identity-design">Brand Identity Design</a></li>
+                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><a href="/services/ux-ui-design">UX/UI Design</a></li>
+                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><a href="/services/web-development">Web Development</a></li>
+                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><a href="/services/mobile-app-development">Mobile App Development</a></li>
+                                            <li className="menu-item menu-item-type-post_type menu-item-object-servics"><a href="/services/consultation">Consultation</a></li>
                                         </ul>
                                     </li>
                                     <li className={`menu-item menu-item-type-post_type menu-item-object-page ${!isMenuOpen ? 'd-none' : ''}`}>
-                                        <Link href="/blog" onClick={closeMenu}>Blog</Link>
+                                        <a href="/blog">Blog</a>
                                     </li>
                                 </ul>
                             </div>
@@ -163,9 +163,9 @@ export default function Header() {
                 <div className="container">
                     <div className="row align-items-center">
                         <div className="col-md-3 col-3">
-                            <Link href="/" className="logo">
+                            <a href="/" className="logo">
                                 <img loading="lazy" className="img-fluid" src="/assets/images/logo.jpg" alt="Softvence Logo" />
-                            </Link>
+                            </a>
                         </div>
                         <div className="col-md-9 col-9">
                             <div className="menu--wrapper">

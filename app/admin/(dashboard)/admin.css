@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Admin Styles */
+.admin-sidebar-link.active {
+    @apply bg-primary/10 text-primary border-r-4 border-primary;
+}
+
+/* Force override global body styles for admin */
+body {
+    background-color: #f9fafb !important;
+    /* bg-gray-50 */
+    color: #111827 !important;
+    /* text-gray-900 */
+    overflow: auto !important;
+    /* Prevent scroll lock from main.js/preloader */
+}
+
+/* Hide preloader on admin pages if it leaks */
+.preloader--overlay {
+    display: none !important;
+}
+
+/* Fix z-index issues */
+aside {
+    z-index: 50;
+}
+
+header {
+    z-index: 40;
+}

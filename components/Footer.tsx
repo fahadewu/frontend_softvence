@@ -17,11 +17,11 @@ const Footer = () => {
 							<div className="footer--box">
 								<h3>Services</h3>
 								<ul id="menu-service-menu" className="softvence-menu">
-									<li className="menu-item"><Link href="/services/brand-identity-design">Brand Identity Design</Link></li>
-									<li className="menu-item"><Link href="/services/ux-ui-design">UX/UI Design</Link></li>
-									<li className="menu-item"><Link href="/services/web-development">Web Development</Link></li>
-									<li className="menu-item"><Link href="/services/mobile-app-development">Mobile App Development</Link></li>
-									<li className="menu-item"><Link href="/services/consultation">Consultation</Link></li>
+									<li className="menu-item"><a href="/services/brand-identity-design">Brand Identity Design</a></li>
+									<li className="menu-item"><a href="/services/ux-ui-design">UX/UI Design</a></li>
+									<li className="menu-item"><a href="/services/web-development">Web Development</a></li>
+									<li className="menu-item"><a href="/services/mobile-app-development">Mobile App Development</a></li>
+									<li className="menu-item"><a href="/services/consultation">Consultation</a></li>
 								</ul>
 							</div>
 						</div>
@@ -90,8 +90,8 @@ const Footer = () => {
 					<div className="copyright--area footer--box" data-aos="fade-in" data-aos-duration="1800">
 						<p>All rights reserved ©2025 Softvence.</p>
 						<ul>
-							<li><Link href="/terms-conditions">Terms &amp; Conditions</Link></li>
-							<li><Link href="/privacy-policy">Privacy Policy</Link></li>
+							<li><a href="/terms-conditions">Terms &amp; Conditions</a></li>
+							<li><a href="/privacy-policy">Privacy Policy</a></li>
 						</ul>
 					</div>
 				</div>

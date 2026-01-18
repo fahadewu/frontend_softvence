@@ -10,9 +10,87 @@
         "vibe-coding"
       ],
       "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-02.png",
-      "client": "Oneisone Entertainment",
-      "services": "UI/UX Design, Vibe Coding",
-      "year": "2024"
+      "client": "John Carter",
+      "services": "UI/UX Design, Vibe Coding , Test",
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Oneisone Entertainment",
+          "heading": "Branding & Design",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-02.png"
+        },
+        {
+          "type": "projectInfo",
+          "client": "John Carter, CEO",
+          "category": "Branding & Design",
+          "liveUrl": "#",
+          "services": [
+            "UX Consultancy",
+            "UI Design",
+            "Software Development"
+          ],
+          "description": "Features: Responsive design, SEO optimization, fast loading, and user-friendly navigation."
+        },
+        {
+          "type": "fullWidthImage",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/P-10.jpg"
+        },
+        {
+          "type": "problemChallengesSolution",
+          "problem": "The client needed a modern website that better reflected their brand, improved user engagement, and supported long-term growth, as the existing site lacked responsiveness, performance, and SEO optimization.",
+          "challenges": "Ensuring mobile responsiveness across various devices.\nOptimizing for SEO without compromising design.\nImproving site speed and performance.\nMaintaining a user-friendly and engaging experience.",
+          "solution": "We delivered a clean, responsive, and SEO-optimized website tailored to the client's brand. The site features an intuitive design, fast performance, and mobile responsiveness, ensuring a seamless experience across all devices."
+        },
+        {
+          "type": "gallery",
+          "images": [
+            "https://softvence.agency/wp-content/uploads/2025/11/P-7.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-10.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-9.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-8.jpg"
+          ]
+        },
+        {
+          "type": "testimonial",
+          "quote": "We couldn’t be happier with the website XISON created for us. From the first meeting, they really listened to our needs and understood what we were trying to achieve. The website not only looks great but is also super easy to use and navigate. It’s fully mobile-responsive, and we’ve noticed an increase in traffic thanks to the SEO work they did. The team was always available for any questions and provided great support throughout the process. We’ve already received positive feedback from our customers, and we’re excited about the future growth of our business with this new site. Highly recommend them!",
+          "clientName": "John Carter",
+          "clientRole": "CEO",
+          "clientImage": "https://softvence.agency/wp-content/uploads/2025/11/P-6.jpg"
+        },
+        {
+          "type": "designProcess",
+          "headline": "The client needed a modern website that better reflected their brand, improved user engagement, and supported long-term growth.",
+          "steps": [
+            {
+              "title": "Discovery & Research",
+              "description": "Thoroughly analyzing the client's existing site and competitor landscape to identify core needs."
+            },
+            {
+              "title": "Strategy & Wireframing",
+              "description": "Mapping out user journeys and site structure for optimal engagement and clear navigation."
+            },
+            {
+              "title": "UI/UX Design",
+              "description": "Creating a modern, high-fidelity design that aligns with the brand's new visual direction."
+            },
+            {
+              "title": "Development & SEO",
+              "description": "Building a responsive site with a focus on speed, performance, and search engine visibility."
+            }
+          ]
+        },
+        {
+          "type": "visualDesigns",
+          "headline": "Visual Designs",
+          "images": [
+            "https://softvence.agency/wp-content/uploads/2025/11/P-7.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-10.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-9.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/P-8.jpg"
+          ]
+        }
+      ]
     },
     {
       "id": 2,
@@ -24,9 +102,88 @@
         "web-develop"
       ],
       "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Development-Cover-01.png",
-      "client": "Modern Business",
+      "client": "Rachel Thompson",
       "services": "Web Development, UI/UX Design",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Website Development for a Modern",
+          "heading": "Development for a Modern",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Development-Cover-01.png"
+        },
+        {
+          "type": "projectInfo",
+          "client": "Rachel Thompson, Marketing Director, Modern Solutions",
+          "category": "Web Development",
+          "liveUrl": "#",
+          "services": [
+            "UX Consultancy",
+            "UI Design",
+            "Software Development"
+          ],
+          "description": "This website development project was created with a strong focus on performance, clarity, and brand alignment. I designed a clean, modern layout that balances visual appeal with user-friendly structure, ensuring visitors can navigate effortlessly across all key sections."
+        },
+        {
+          "type": "fullWidthImage",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/03.jpg"
+        },
+        {
+          "type": "problemChallengesSolution",
+          "problem": "Many websites today suffer from slow loading times, poor navigation, and a lack of optimization for various devices and screen sizes.",
+          "challenges": "Ensuring the website was both visually engaging and easy to navigate.\nAchieving a balance between speed and design quality.\nBuilding a flexible and scalable website.",
+          "solution": "Focused on creating a high-performance, user-friendly platform that aligns perfectly with the client's brand. A clean, modern design was implemented, ensuring the website is visually appealing."
+        },
+        {
+          "type": "gallery",
+          "images": [
+            "https://softvence.agency/wp-content/uploads/2025/11/download-91.png",
+            "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_04.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_02.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/03.jpg"
+          ]
+        },
+        {
+          "type": "testimonial",
+          "quote": "Working with this team on our website development project has been an absolute pleasure. The final website perfectly aligns with our brand and delivers a modern, visually appealing design while ensuring smooth navigation and fast loading times. The user experience is seamless across all devices, and we’ve already seen a significant increase in engagement and conversions. The attention to detail in SEO, mobile responsiveness, and accessibility standards truly sets this site apart.",
+          "clientName": "Rachel Thompson",
+          "clientRole": "Marketing Director, Modern Solutions",
+          "clientImage": "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_05.jpg"
+        },
+        {
+          "type": "designProcess",
+          "headline": "This website development project was created with a strong focus on performance, clarity, and brand alignment.",
+          "steps": [
+            {
+              "title": "Audit & Analysis",
+              "description": "Identifying performance bottlenecks and brand misalignments in the previous presence."
+            },
+            {
+              "title": "Conceptualization",
+              "description": "Drafting multiple design directions that emphasize clarity, impact, and user engagement."
+            },
+            {
+              "title": "Responsive Prototyping",
+              "description": "Ensuring the design works flawlessly across all breakpoints and various screen sizes."
+            },
+            {
+              "title": "Integration & Launch",
+              "description": "Implementing the final design with high-performance backend tools and SEO optimization."
+            }
+          ]
+        },
+        {
+          "type": "visualDesigns",
+          "headline": "Development for a Modern",
+          "images": [
+            "https://softvence.agency/wp-content/uploads/2025/11/download-91.png",
+            "https://softvence.agency/wp-content/uploads/2025/11/03.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_02.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_05.jpg",
+            "https://softvence.agency/wp-content/uploads/2025/11/12-11-25-Portfolio-presentaion_06-scaled.jpg"
+          ]
+        }
+      ]
     },
     {
       "id": 3,
@@ -40,7 +197,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/11/download-88-1.png",
       "client": "Connectly",
       "services": "Mobile App Development, UI/UX Design",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Mobile App Design",
+          "heading": "Social & Event Networking App",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/download-88-1.png"
+        }
+      ]
     },
     {
       "id": 4,
@@ -54,7 +219,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio-M1.jpg",
       "client": "E-commerce Platform",
       "services": "UI/UX Design, Web Development",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Dashboard UI Design",
+          "heading": "E-commerce Website Dashboard",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio-M1.jpg"
+        }
+      ]
     },
     {
       "id": 5,
@@ -68,7 +241,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-03.png",
       "client": "Corporate Client",
       "services": "UI/UX Design, Vibe Coding",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Corporate Website",
+          "heading": "Website Development",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/Web-Devlopment-Cover-03.png"
+        }
+      ]
     },
     {
       "id": 6,
@@ -81,7 +262,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/11/Dashboard-Cover.png",
       "client": "Theta Analyzers",
       "services": "UI/UX Design",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Analytics Dashboard",
+          "heading": "Theta Analyzers",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/Dashboard-Cover.png"
+        }
+      ]
     },
     {
       "id": 7,
@@ -94,7 +283,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio1-1-scaled.jpg",
       "client": "Harmonize",
       "services": "Mobile App Development",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Mobile Booking Platform",
+          "heading": "Harmonize – Venue Booking App",
+          "image": "https://softvence.agency/wp-content/uploads/2025/11/UI-UX-portfolio1-1-scaled.jpg"
+        }
+      ]
     },
     {
       "id": 8,
@@ -109,7 +306,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/06/working-with-calculator.jpg",
       "client": "Crafting Business",
       "services": "Branding, UI/UX Design, Web Development",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Brand Identity & Web Design",
+          "heading": "Crafting Business",
+          "image": "https://softvence.agency/wp-content/uploads/2025/06/working-with-calculator.jpg"
+        }
+      ]
     },
     {
       "id": 9,
@@ -123,7 +328,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2025/06/Futuristic-Abstract-Design.jpg",
       "client": "Bank Made",
       "services": "Branding, UI/UX Design",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Financial Branding",
+          "heading": "Bank Made",
+          "image": "https://softvence.agency/wp-content/uploads/2025/06/Futuristic-Abstract-Design.jpg"
+        }
+      ]
     },
     {
       "id": 10,
@@ -139,7 +352,15 @@
       "image": "https://softvence.agency/wp-content/uploads/2024/03/Thumnail-collin.png",
       "client": "Colin Wolf Pack",
       "services": "Branding, Mobile App, UI/UX Design, Web Development",
-      "year": "2024"
+      "year": "2024",
+      "sections": [
+        {
+          "type": "hero",
+          "subHeading": "Complete Brand Experience",
+          "heading": "Colin Wolf Pack",
+          "image": "https://softvence.agency/wp-content/uploads/2024/03/Thumnail-collin.png"
+        }
+      ]
     }
   ]
 }

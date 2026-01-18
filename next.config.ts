@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'softvence.agency',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**',
+      },
     ],
   },
 };

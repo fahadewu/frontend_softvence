@@ -299,7 +299,8 @@
     .counter--wrapper .counter--box h2,
     .counter--wrapper .counter--box h2 p,
     .counter--wrapper .counter--box h2 span {
-        font-size: 82px
+        font-size: 62px;
+        gap: 5px;
     }
 
     .counter--wrapper .counter--box h2 {
@@ -592,7 +593,7 @@
     .counter--wrapper .counter--box h2,
     .counter--wrapper .counter--box h2 p,
     .counter--wrapper .counter--box h2 span {
-        font-size: 70px
+        font-size: 40px;
     }
 
     .about--area,
@@ -4578,7 +4579,8 @@
     .work--inner--hero .inner--hero--text h1,
     .work--inner--hero .inner--hero--text h2,
     .work--inner--hero .inner--hero--text h3 {
-        font-size: 30px
+        font-size: 25px;
+        gap: 2px;
     }
 
     .counter--wrapper .counter--box h2 {
