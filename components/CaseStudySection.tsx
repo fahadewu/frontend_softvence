@@ -97,7 +97,10 @@ export default function CaseStudySection() {
 
     const filteredCases = filter === '*'
         ? allCaseStudies.slice(0, 6)
-        : allCaseStudies.filter(item => item.categories.some((c: string) => c.toLowerCase().includes(filter.replace('.', ''))));
+        : allCaseStudies.filter(item =>
+            item.categories &&
+            item.categories.some((c: string) => c.toLowerCase().includes(filter.replace('.', '').toLowerCase()))
+        );
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         const target = e.currentTarget;
@@ -152,35 +155,44 @@ export default function CaseStudySection() {
                             </div>
 
                             <div className="row case-gallery">
-                                {filteredCases.map((item, index) => (
-                                    <div key={index} className={`col-md-6 mt_85 ${item.categories.join(' ')}`}>
-                                        <a href={`/case-studies/${item.slug}`} className="case--item">
-                                            <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-                                                <div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom"></div>
-                                                <img
-                                                    loading="lazy"
-                                                    src={item.image}
-                                                    alt={item.title}
-                                                />
-                                                <div className="case--cursor" style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%) scale(0)', opacity: 0, position: 'absolute' }}>
-                                                    view<br />
-                                                    case study
+                                {filteredCases.length > 0 ? (
+                                    filteredCases.map((item, index) => (
+                                        <div key={index} className={`col-md-6 mt_85 ${item.categories?.join(' ')}`}>
+                                            <Link href={`/case-studies/${item.slug}`} className="case--item">
+                                                <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+                                                    <div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom"></div>
+                                                    <img
+                                                        loading="lazy"
+                                                        src={item.image || "/assets/images/logo.jpg"}
+                                                        alt={item.title}
+                                                        onError={(e) => {
+                                                            (e.target as HTMLImageElement).src = `https://placehold.co/800x600?text=${encodeURIComponent(item.title)}`;
+                                                        }}
+                                                    />
+                                                    <div className="case--cursor" style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%) scale(0)', opacity: 0, position: 'absolute' }}>
+                                                        view<br />
+                                                        case study
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="content">
-                                                <h3>{item.title}</h3>
-                                                <p>{item.description}</p>
-                                            </div>
-                                        </a>
+                                                <div className="content">
+                                                    <h3>{item.title}</h3>
+                                                    <p>{item.description}</p>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <div className="col-12 text-center py-5">
+                                        <p className="common--para italic text-gray-400">Our portfolio is constantly evolving. No case studies found for this category yet.</p>
                                     </div>
-                                ))}
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="row mt-5">
                     <div className="col-md-12 text-center" data-aos="fade-up" data-aos-duration="1000">
-                        <a href="/work" className="button buttonv2 button-click">View All Case Studies</a>
+                        <Link href="/work" className="button buttonv2 button-click">View All Case Studies</Link>
                     </div>
                 </div>
             </div>

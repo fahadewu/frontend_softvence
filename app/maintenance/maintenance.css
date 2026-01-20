@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset specific to maintenance page to override global styles */
+.maintenance-container img {
+    max-width: 100%;
+}
+
+.maintenance-container * {
+    box-sizing: border-box;
+}
+
+/* Ensure background is truly dark and overrides root body */
+.maintenance-container-root {
+    background-color: #050505 !important;
+    min-height: 100vh;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.maintenance-container img.h-10 {
+    height: 40px !important;
+    width: auto !important;
+}
+
+.maintenance-container .w-24 {
+    width: 96px !important;
+    height: 96px !important;
+}
+
+/* Logic for animations if AOS isn't working as expected there */
+[data-aos] {
+    pointer-events: none;
+}
+
+[data-aos].aos-animate {
+    pointer-events: auto;
+}

@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@types/cookie": "^0.6.0",
     "aos": "^2.3.4",
+    "cookie": "^1.1.1",
     "gsap": "^3.14.2",
+    "jose": "^6.1.3",
     "lenis": "^1.3.17",
     "lottie-web": "^5.13.0",
     "lucide-react": "^0.562.0",

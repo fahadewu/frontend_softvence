@@ -1,18 +1,39 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Calendar, FileText } from 'lucide-react';
 import { AdminPageHeader } from '@/components/admin/ui';
 import Image from 'next/image';
 
-// Mock Data
-const posts = [
-    { id: 1, title: 'Top 10 Design Trends for 2026', date: 'Jan 15, 2026', category: 'Design', image: 'https://images.unsplash.com/photo-1626785774573-4b7993143d2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', excerpt: 'Discover the latest web and app design trends that will dominate this year.' },
-    { id: 2, title: 'Importance of UX Research', date: 'Jan 10, 2026', category: 'UX/UI', image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80', excerpt: 'Why research is the most critical phase in any digital product development.' },
-];
-
 export default function PostsPage() {
+    const [posts, setPosts] = useState<any[]>([]);
+
+    const fetchPosts = async () => {
+        const response = await fetch('/api/blogs');
+        if (response.ok) {
+            const data = await response.json();
+            setPosts(data);
+        }
+    };
+
+    useEffect(() => {
+        fetchPosts();
+    }, []);
+
+    const handleDelete = async (id: number) => {
+        if (confirm('Are you sure you want to delete this post?')) {
+            const response = await fetch(`/api/blogs/${id}`, {
+                method: 'DELETE',
+            });
+            if (response.ok) {
+                fetchPosts();
+            } else {
+                alert('Failed to delete post');
+            }
+        }
+    };
+
     return (
         <div className="space-y-6">
             <AdminPageHeader
@@ -33,7 +54,11 @@ export default function PostsPage() {
                 {posts.map((post) => (
                     <div key={post.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-6 hover:shadow-md transition-all">
                         <div className="relative w-full md:w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
-                            <Image src={post.image} alt={post.title} fill className="object-cover" />
+                            {post.image ? (
+                                <Image src={post.image} alt={post.title} fill className="object-cover" />
+                            ) : (
+                                <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">No Image</div>
+                            )}
                         </div>
 
                         <div className="flex-1 py-1">
@@ -58,7 +83,10 @@ export default function PostsPage() {
                                 <Edit size={16} />
                                 Edit
                             </Link>
-                            <button className="w-full flex items-center justify-center p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors">
+                            <button
+                                onClick={() => handleDelete(post.id)}
+                                className="w-full flex items-center justify-center p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
+                            >
                                 <Trash2 size={16} />
                             </button>
                         </div>

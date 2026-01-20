@@ -1,0 +1,105 @@
+{
+    "hero": {
+        "title1": "Impossible Gets",
+        "title2": "Possible With Us",
+        "cta": {
+            "text": "CLICK HERE!",
+            "link": "/contact"
+        }
+    },
+    "whoWeAre": {
+        "heading": "WHO WE ARE",
+        "description": "We are a digital agency focused on web design and development, where we go beyond creating websites & develop digital experiences that connect with vision! <br /><br /> Our passionate team of designers, developers, researchers, and strategists share a passion for innovation that combines creativity and functionality to drive success. <br /><br /> Softvence is not just a design agency; it's a strategic partner on your journey to digital excellence. Explore the possibilities with Softvence Agency – where innovation meets impact.",
+        "counters": [
+            {
+                "label": "Clients Served",
+                "value": 40000,
+                "suffix": "+"
+            },
+            {
+                "label": "Team Members",
+                "value": 400,
+                "suffix": "+"
+            },
+            {
+                "label": "Years Of Experience",
+                "value": 7,
+                "suffix": "+",
+                "isPrimary": true
+            }
+        ]
+    },
+    "whyChooseUs": {
+        "heading": "WHY CHOOSE US",
+        "subHeading": "Choose Excellence- Elevate Your Digital Journey With Softvence Agency.",
+        "cards": [
+            {
+                "id": "01",
+                "title": "Transparent Communication",
+                "description": "Elevate trust through clear, honest dialogue, ensuring a partnership built on transparency and shared understanding.",
+                "image": "https://softvence.agency/wp-content/uploads/2024/02/case-studies1.png"
+            },
+            {
+                "id": "02",
+                "title": "Free Consultation",
+                "description": "Explore possibilities risk-free with our complimentary consultation, guiding you towards informed decisions for success.",
+                "image": "https://softvence.agency/wp-content/uploads/2024/02/blog1.png"
+            },
+            {
+                "id": "03",
+                "title": "Years of Experience",
+                "description": "Benefit from our seasoned expertise, gained through years of navigating the digital landscape, ensuring optimal solutions.",
+                "image": "https://softvence.agency/wp-content/uploads/2024/02/team2.png"
+            },
+            {
+                "id": "04",
+                "title": "Innovative Excellence",
+                "description": "Experience innovation that goes beyond boundaries, as we continuously strive for excellence in crafting digital solutions.",
+                "image": "https://softvence.agency/wp-content/uploads/2024/02/blog1.png"
+            },
+            {
+                "id": "05",
+                "title": "30 Days of Ongoing Support",
+                "description": "Beyond project completion, relish peace of mind with our unwavering support for 30 days, ensuring a seamless transition.",
+                "image": "https://softvence.agency/wp-content/uploads/2024/02/image-57.png"
+            }
+        ]
+    },
+    "team": {
+        "heading": "OUR TEAM",
+        "subHeading": "Meet the Softvence Pioneers of Digital Innovation.",
+        "description": "Our team, a fusion of creativity and expertise, is dedicated to crafting unparalleled digital experiences. With diverse talents in design, development, research, and strategy, we converge to elevate your vision. Each member embodies our commitment to innovation, ensuring every project reflects the pinnacle of excellence. Meet the architects of your digital success at Softvence Agency.",
+        "images": [
+            "https://softvence.agency/wp-content/uploads/2024/02/team1.png",
+            "https://softvence.agency/wp-content/uploads/2024/02/team2.png"
+        ]
+    },
+    "aboutImage": "https://softvence.agency/wp-content/uploads/2024/03/Thumnail-3.png?bv_host=softvence.agency&bv-resized-infos=bv_resized_mobile%3A480%2A446%3Bbv_resized_ipad%3A820%2A762%3Bbv_resized_desktop%3A826%2A768",
+    "awards": {
+        "heading": "AWARDS WE GOT",
+        "subHeading": "Embark on Excellence with Softvence- Celebrating Our Award-Winning Achievements.",
+        "items": [
+            {
+                "title": "Pro Seller Badge",
+                "type": "fiverr"
+            },
+            {
+                "title": "Top Rated Plus",
+                "type": "upwork"
+            },
+            {
+                "title": "Top Design Agency",
+                "type": "clutch"
+            }
+        ]
+    },
+    "portfolioIntro": {
+        "heading": "We have been working with different client bases from different regions of the world. We are establishing ourselves as one of the prominent international digital service providing agency."
+    },
+    "marqueeLogos": [
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"31\" viewBox=\"0 0 120 31\" fill=\"none\"><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M17.9285 2.59615C17.9285 3.8195 16.8615 4.86809 15.6166 4.86809C14.3717 4.86809 13.3047 3.8195 13.3047 2.59615C13.3047 1.3728 14.3717 0.324219 15.6166 0.324219C16.8615 0.324219 17.9285 1.3728 17.9285 2.59615ZM15.616 6.73242C14.2526 6.73242 13.1855 7.78101 13.1855 9.12086C13.1855 10.4607 14.2526 11.5093 15.616 11.5093C16.9795 11.5093 18.0465 10.4607 18.0465 9.12086C18.0465 7.72275 16.9795 6.73242 15.616 6.73242ZM13.1271 15.5287C13.1271 14.1888 14.2534 13.082 15.6169 13.082C16.9803 13.082 18.1659 14.1888 18.1066 15.5287C18.1066 16.8686 16.9803 17.9754 15.6169 17.9754C14.2534 17.9754 13.1271 16.8686 13.1271 15.5287ZM15.616 19.5479C14.2526 19.5479 13.1855 20.5964 13.1855 21.9363C13.1855 23.2762 14.2526 24.3247 15.616 24.3247C16.9795 24.3247 18.0465 23.2762 18.0465 21.9363C18.0465 20.6547 16.9795 19.5479 15.616 19.5479ZM13.3047 28.4028C13.3047 27.1794 14.3717 26.1309 15.6166 26.1309C16.9208 26.1309 17.9285 27.1794 17.9285 28.4028C17.9285 29.6261 16.8615 30.6747 15.6166 30.6747C14.3717 30.6747 13.3047 29.6261 13.3047 28.4028ZM22.0198 6.44141C20.5378 6.44141 19.293 7.66476 19.293 9.12112C19.293 10.5775 20.5378 11.8008 22.0198 11.8008C23.5018 11.8008 24.7467 10.5775 24.7467 9.12112C24.7467 7.66476 23.5018 6.44141 22.0198 6.44141ZM19.1738 15.5872C19.1738 14.0144 20.478 12.791 22.0193 12.791C23.5605 12.791 24.8647 14.0144 24.8647 15.5872C24.8647 17.1601 23.5605 18.3835 22.0193 18.3835C20.4187 18.3835 19.1738 17.1019 19.1738 15.5872ZM22.0198 19.2568C20.5378 19.2568 19.293 20.4802 19.293 21.9366C19.293 23.3929 20.5378 24.6163 22.0198 24.6163C23.5018 24.6163 24.7467 23.3929 24.7467 21.9366C24.7467 20.4802 23.5018 19.2568 22.0198 19.2568ZM25.457 15.5289C25.457 13.7813 26.939 12.4414 28.5989 12.4414C30.2587 12.4414 31.6222 13.7813 31.7407 15.5289C31.7407 17.2765 30.3773 18.6164 28.5989 18.6164C26.8205 18.6164 25.457 17.16 25.457 15.5289ZM9.15488 7.02344C8.02856 7.02344 7.08008 7.95551 7.08008 9.06235C7.08008 10.1692 8.02856 11.1013 9.15488 11.1013C10.2812 11.1013 11.2297 10.1692 11.2297 9.06235C11.2297 7.95551 10.3405 7.02344 9.15488 7.02344ZM6.96289 15.5285C6.96289 14.3051 7.91137 13.373 9.15625 13.373C10.4011 13.373 11.3496 14.3051 11.3496 15.5285C11.3496 16.7518 10.4011 17.6839 9.15625 17.6839C7.91137 17.6839 6.96289 16.7518 6.96289 15.5285ZM9.15488 19.8398C8.02856 19.8398 7.08008 20.7719 7.08008 21.8788C7.08008 22.9856 8.02856 23.9177 9.15488 23.9177C10.2812 23.9177 11.2297 22.9856 11.2297 21.8788C11.2297 20.7719 10.3405 19.8398 9.15488 19.8398ZM0.796875 15.587C0.796875 14.5384 1.62679 13.7228 2.69383 13.7228C3.76087 13.7228 4.59079 14.5384 4.59079 15.587C4.59079 16.6355 3.76087 17.4511 2.69383 17.4511C1.62679 17.4511 0.796875 16.6355 0.796875 15.587Z\" fill=\"white\" /></svg>",
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"120\" height=\"31\" viewBox=\"0 0 120 31\" fill=\"none\"><path d=\"M55.3349 11.5703C55.0978 11.5703 54.9199 11.8033 54.9199 11.9781V28.1147C54.9199 28.3477 55.157 28.5224 55.3349 28.5224H57.2911C57.5282 28.5224 57.7061 28.2894 57.7061 28.1147V11.9781C57.7061 11.7451 57.469 11.5703 57.2911 11.5703H55.3349Z\" fill=\"white\" /><path d=\"M56.4028 4.75391C55.3358 4.75391 54.5059 5.56947 54.5059 6.61806C54.5059 7.66664 55.3358 8.48221 56.4028 8.48221C57.4699 8.48221 58.2998 7.66664 58.2998 6.61806C58.2998 5.56947 57.4106 4.75391 56.4028 4.75391Z\" fill=\"white\" /></svg>",
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"119\" height=\"39\" viewBox=\"0 0 119 39\" fill=\"none\"><path d=\"M29.2361 13.7558H15.4143V17.8313H25.2431C24.7517 23.574 19.9602 26.1058 15.4758 26.1058C9.70135 26.1058 4.66408 21.5363 4.66408 15.176C4.66408 8.93927 9.45563 4.12277 15.4758 4.12277C20.1445 4.12277 22.8474 7.08677 22.8474 7.08677L25.6732 4.12277C25.6732 4.12277 21.9874 0.047268 15.2915 0.047268C6.7527 -0.014482 0.179688 7.21027 0.179688 15.0525C0.179688 22.7095 6.38412 30.1813 15.5372 30.1813C23.5845 30.1813 29.4818 24.6855 29.4818 16.4728C29.4818 14.7438 29.2361 13.7558 29.2361 13.7558Z\" fill=\"white\" /><path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M30.7715 20.3635C30.7715 15.1765 34.8259 10.7305 40.4774 10.7305C45.1461 10.7305 50.1834 14.065 50.2448 20.487C50.2448 26.168 45.9447 30.1817 40.6003 30.1817C34.703 30.1817 30.7715 25.674 30.7715 20.3635ZM45.9446 20.4873C45.9446 16.9058 43.3031 14.6211 40.5387 14.6211C37.4058 14.6211 35.01 17.0911 35.0715 20.4256C35.0715 23.8836 37.4672 26.3536 40.5387 26.3536C43.3645 26.3536 45.9446 24.0688 45.9446 20.4873Z\" fill=\"white\" /><path d=\"M94.4746 29.6247H98.7133V0.972656H94.4746V29.6247Z\" fill=\"white\" /></svg>",
+        "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"136\" height=\"39\" viewBox=\"0 0 136 39\" fill=\"none\"><path d=\"M24.7247 3.43111C24.184 1.65952 22.2916 0.70559 20.5343 1.25069C18.777 1.7958 17.8308 3.70366 18.3715 5.47524L27.0227 32.3216C27.631 33.9569 29.3882 34.9108 31.0779 34.4339C32.8352 33.8888 33.9166 32.049 33.3759 30.2775C33.3759 30.2093 24.7247 3.43111 24.7247 3.43111Z\" fill=\"white\" /><path d=\"M11.3419 7.86079C10.8012 6.08921 8.90876 5.13528 7.1515 5.68038C5.39424 6.22548 4.44802 8.13335 4.98871 9.90493L13.6399 36.7513C14.2481 38.3866 16.0054 39.3405 17.6951 38.8636C19.4523 38.3184 20.5337 36.4787 19.993 34.7071C19.993 34.639 11.3419 7.86079 11.3419 7.86079Z\" fill=\"white\" /></svg>"
+    ]
+}

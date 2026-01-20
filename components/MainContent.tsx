@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import caseStudiesData from '@/data/caseStudies.json';
+import blogPostsData from '@/data/blogPosts.json';
 import CaseStudySection from './CaseStudySection';
 import Testimonials from './Testimonials';
 
@@ -2173,42 +2174,44 @@ export default function MainContent() {
 						</div>
 					</div>
 					<div className="row mt_50 blog--row">
-						<div className="col-lg-4 col-md-6 mt_20" data-aos="fade-up" data-aos-duration="1000">
-
-							<a className="blog--box" href="/blog/low-fidelity-vs-high-fidelity-prototyping-a-complete-guide/">
-								<div className="img--area">
-									<img src="https://softvence.agency/wp-content/uploads/2024/02/Frame-8631.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A179%2A230%3Bbv_resized_ipad%3A179%2A230%3Bbv_resized_desktop%3A179%2A230" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
-								</div>
-								<div className="blog--content">
-									<h4>Low-Fidelity vs High-Fidelity Prototyping: A Complete Guide</h4>
-									<div className="category">
-										<p>Reading Time 3 Min</p>
-										<p>
-											Web Design										</p>
+						{/* Dynamic Blog Mapping */}
+						{blogPostsData.blogPosts.length > 0 ? (
+							<>
+								{blogPostsData.blogPosts.slice(0, 2).map((post) => (
+									<div key={post.id} className="col-lg-4 col-md-6 mt_20" data-aos="fade-up" data-aos-duration="1000">
+										<a className="blog--box" href={`/blog/${post.slug}`}>
+											<div className="img--area">
+												<img
+													src={post.image || "/assets/images/logo.jpg"}
+													loading="lazy"
+													className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img"
+													alt={post.title}
+													onError={(e) => {
+														(e.target as HTMLImageElement).src = `https://placehold.co/600x400?text=${encodeURIComponent(post.title)}`;
+													}}
+												/>
+											</div>
+											<div className="blog--content">
+												<h4>{post.title}</h4>
+												<div className="category">
+													<p>Reading Time {post.readingTime || '5 Min'}</p>
+													<p>{post.category || 'Insights'}</p>
+												</div>
+											</div>
+										</a>
 									</div>
+								))}
+								<div className="btn--area text-center">
+									<a href="/blog" className="button buttonv2 mt_100 button-click" data-aos="fade-up"
+										data-aos-duration="1000">View All</a>
 								</div>
-							</a>
-						</div>
-						<div className="col-lg-4 col-md-6 mt_20" data-aos="fade-up" data-aos-duration="1000">
-
-							<a className="blog--box" href="/blog/who-are-you-affiliated-with/">
-								<div className="img--area">
-									<img src="https://softvence.agency/wp-content/uploads/2024/02/blog1.png?bv_host=softvence.agency&amp;bv-resized-infos=bv_resized_mobile%3A427%2A357%3Bbv_resized_ipad%3A427%2A357%3Bbv_resized_desktop%3A427%2A357" data-bv-data- loading="lazy" className="w-100 data-bv-tag-attr-replace data-bv-lazyload-tag-img" alt="" />
-								</div>
-								<div className="blog--content">
-									<h4>Who are you affiliated with?</h4>
-									<div className="category">
-										<p>Reading Time 1 Min</p>
-										<p>
-											Web Design										</p>
-									</div>
-								</div>
-							</a>
-						</div>
-						<div className="btn--area text-center">
-							<a href="/blog" className="button buttonv2 mt_100 button-click" data-aos="fade-up"
-								data-aos-duration="1000">View All</a>
-						</div>
+							</>
+						) : (
+							<div className="col-12 text-center py-5" data-aos="fade-up">
+								<p className="common--para italic text-gray-400">Our latest insights and updates are coming soon. Stay tuned!</p>
+							</div>
+						)}
+						{/* End Dynamic Blog Mapping */}
 					</div>
 				</div>
 			</section>

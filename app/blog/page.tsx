@@ -33,8 +33,8 @@ export default function Page() {
 		}
 	};
 
-	// Get unique categories
-	const categories = Array.from(new Set(allBlogPosts.map(post => post.category)));
+	// Get unique categories and filter out undefined/null
+	const categories = Array.from(new Set(allBlogPosts.map(post => post.category).filter(Boolean)));
 
 	return (
 		<div id="page" className="site">
@@ -118,27 +118,42 @@ export default function Page() {
 										</div>
 
 										<div className="row case-gallery">
-											{filteredPosts.map((post) => (
-												<div key={post.id} className="col-lg-4 col-md-6 mt_80 webdesign">
-													<a href={`/blog/${post.slug}`} className="blog--box">
-														<div className="img--area">
-															<img
-																src={post.image}
-																alt={post.title}
-																className="w-100 wp-post-image"
-																loading="lazy"
-															/>
-														</div>
-														<div className="blog--content">
-															<h4>{post.title}</h4>
-															<div className="category">
-																<p>Reading Time {post.readingTime}</p>
-																<p>{post.category}</p>
+											{filteredPosts.length > 0 ? (
+												filteredPosts.map((post) => (
+													<div key={post.id} className="col-lg-4 col-md-6 mt_80 webdesign">
+														<a href={`/blog/${post.slug}`} className="blog--box">
+															<div className="img--area">
+																<img
+																	src={post.image || "/assets/images/logo.jpg"}
+																	alt={post.title}
+																	className="w-100 wp-post-image"
+																	loading="lazy"
+																	onError={(e) => {
+																		(e.target as HTMLImageElement).src = `https://placehold.co/600x400?text=${encodeURIComponent(post.title)}`;
+																	}}
+																/>
 															</div>
-														</div>
-													</a>
+															<div className="blog--content">
+																<h4>{post.title}</h4>
+																<div className="category">
+																	<p>Reading Time {post.readingTime || '5 Min'}</p>
+																	<p>{post.category || 'Insights'}</p>
+																</div>
+															</div>
+														</a>
+													</div>
+												))
+											) : (
+												<div className="col-12 text-center py-5">
+													<p className="common--para italic text-gray-400 mb_30">No posts found in this category.</p>
+													<button
+														className="button buttonv2 button-click"
+														onClick={() => handleFilter('*')}
+													>
+														Show All Posts
+													</button>
 												</div>
-											))}
+											)}
 										</div>
 									</div>
 								</div>

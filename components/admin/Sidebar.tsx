@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { LayoutDashboard, FileText, Briefcase, Settings, X, LogOut, MessageSquare } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
 interface SidebarProps {
@@ -13,6 +14,20 @@ interface SidebarProps {
 
 const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
     const pathname = usePathname();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+            });
+            if (response.ok) {
+                router.push('/admin/login');
+            }
+        } catch (error) {
+            console.error('Logout error:', error);
+        }
+    };
 
     const links = [
         { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
@@ -20,6 +35,7 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         { name: 'Case Studies', href: '/admin/case-studies', icon: FileText },
         { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
         { name: 'Blog Posts', href: '/admin/posts', icon: FileText },
+        { name: 'Settings', href: '/admin/settings', icon: Settings },
     ];
 
     return (
@@ -37,8 +53,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     }`}
             >
                 <div className="flex h-16 items-center justify-between px-6 border-b border-gray-100">
-                    {/* Replace with actual logo if available, or text */}
-                    <span className="text-xl font-bold text-gray-900">Admin<span className="text-primary">Panel</span></span>
+                    {/* Logo */}
+                    <Link href="/admin">
+                        <img src="/assets/images/logo.jpg" alt="Softvence Logo" className="h-8 w-auto" />
+                    </Link>
                     <button onClick={onClose} className="lg:hidden text-gray-500 hover:text-gray-700">
                         <X size={24} />
                     </button>
@@ -64,7 +82,10 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
                     })}
 
                     <div className="mt-8 pt-4 border-t border-gray-100">
-                        <button className="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors">
+                        <button
+                            onClick={handleLogout}
+                            className="flex w-full items-center gap-3 px-4 py-3 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                        >
                             <LogOut size={20} />
                             Logout
                         </button>

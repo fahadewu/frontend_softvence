@@ -93,6 +93,30 @@ export default function Work() {
         setFilterKey(filter);
     };
 
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const cursor = target.querySelector('.case--cursor') as HTMLElement;
+        if (cursor) {
+            const rect = target.getBoundingClientRect();
+            const x = e.clientX - rect.left + 20;
+            const y = e.clientY - rect.top + 20;
+
+            cursor.style.left = `${x}px`;
+            cursor.style.top = `${y}px`;
+            cursor.style.opacity = '1';
+            cursor.style.transform = 'scale(1) translate(-50%, -50%)';
+        }
+    };
+
+    const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+        const target = e.currentTarget;
+        const cursor = target.querySelector('.case--cursor') as HTMLElement;
+        if (cursor) {
+            cursor.style.opacity = '0';
+            cursor.style.transform = 'scale(0) translate(-50%, -50%)';
+        }
+    };
+
     return (
         <div id="page" className="site">
             <div className="parent--wrapper">
@@ -223,37 +247,43 @@ export default function Work() {
                                         </div>
 
                                         <div className="row grid case-gallery" ref={gridRef}>
-                                            {allCaseStudies.map((caseStudy) => (
-                                                <div key={caseStudy.id} className={`col-md-6 mt_85 ${caseStudy.categories.join(' ')}`}>
-                                                    <a href={`/case-studies/${caseStudy.slug}`} className="case--item">
-                                                        <div className="img--area">
-                                                            <div
-                                                                className="img-overlay"
-                                                                data-bgc="#FFB748"
-                                                                data-aos="reveal-bottom"
-                                                            ></div>
-                                                            <img
-                                                                className="bv-lazyload-tag-img"
-                                                                loading="lazy"
-                                                                src={caseStudy.image}
-                                                                alt={caseStudy.title}
-                                                                onError={(e) => {
-                                                                    (e.target as HTMLImageElement).src = `https://placehold.co/600x600?text=${encodeURIComponent(caseStudy.title)}`;
-                                                                }}
-                                                            />
+                                            {allCaseStudies.length > 0 ? (
+                                                allCaseStudies.map((caseStudy) => (
+                                                    <div key={caseStudy.id} className={`col-md-6 mt_85 ${caseStudy.categories.join(' ')}`}>
+                                                        <a href={`/case-studies/${caseStudy.slug}`} className="case--item">
+                                                            <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+                                                                <div
+                                                                    className="img-overlay"
+                                                                    data-bgc="#FFB748"
+                                                                    data-aos="reveal-bottom"
+                                                                ></div>
+                                                                <img
+                                                                    className="bv-lazyload-tag-img"
+                                                                    loading="lazy"
+                                                                    src={caseStudy.image || "/assets/images/logo.jpg"}
+                                                                    alt={caseStudy.title}
+                                                                    onError={(e) => {
+                                                                        (e.target as HTMLImageElement).src = `https://placehold.co/800x600?text=${encodeURIComponent(caseStudy.title)}`;
+                                                                    }}
+                                                                />
 
-                                                            <div className="case--cursor">
-                                                                view<br />
-                                                                case study
+                                                                <div className="case--cursor" style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%) scale(0)', opacity: 0, position: 'absolute' }}>
+                                                                    view<br />
+                                                                    case study
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div className="content">
-                                                            <h3>{caseStudy.title}</h3>
-                                                            <p>{caseStudy.categories.join(' ')}</p>
-                                                        </div>
-                                                    </a>
+                                                            <div className="content">
+                                                                <h3>{caseStudy.title}</h3>
+                                                                <p>{caseStudy.categories.join(' ')}</p>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                ))
+                                            ) : (
+                                                <div className="col-12 text-center py-5">
+                                                    <p className="common--para italic text-gray-400">Our portfolio is constantly evolving. Please check back later for new case studies!</p>
                                                 </div>
-                                            ))}
+                                            )}
                                         </div>
                                     </div>
                                 </div>

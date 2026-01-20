@@ -18,6 +18,10 @@ const Topbar = ({ onMenuClick }: TopbarProps) => {
                     <Menu size={24} />
                 </button>
 
+                <div className="lg:hidden">
+                    <img src="/assets/images/logo.jpg" alt="Softvence Logo" className="h-8 w-auto" />
+                </div>
+
                 {/* Search Bar (Optional) */}
                 <div className="hidden md:flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-full w-64 border border-gray-200 focus-within:ring-2 focus-within:ring-primary/20">
                     <Search size={18} className="text-gray-400" />

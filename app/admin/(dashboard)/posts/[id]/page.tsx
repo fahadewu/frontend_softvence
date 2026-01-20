@@ -1,24 +1,95 @@
 'use client';
 
-import React, { useState, use } from 'react';
+import React, { useState, use, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { AdminPageHeader, AdminInput, AdminTextArea, AdminImageUpload } from '@/components/admin/ui';
 
 export default function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+    const { id } = use(params); // Unwrapping params using React.use() for Next.js 15+
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const [isFetching, setIsFetching] = useState(true);
+    const [formData, setFormData] = useState({
+        title: '',
+        category: '',
+        excerpt: '',
+        content: '',
+        image: '',
+        tags: '',
+        author: '',
+        readingTime: ''
+    });
 
-    const handleSubmit = (e: React.FormEvent) => {
+    useEffect(() => {
+        const fetchPost = async () => {
+            console.log('Fetching post with ID:', id);
+            if (!id) return;
+            try {
+                const response = await fetch(`/api/blogs/${id}`);
+                console.log('Fetch response status:', response.status);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log('Fetched data:', data);
+                    setFormData({
+                        ...data,
+                        tags: Array.isArray(data.tags) ? data.tags.join(', ') : data.tags || ''
+                    });
+                } else {
+                    console.error('Fetch failed');
+                    alert('Failed to load post data');
+                }
+            } catch (error) {
+                console.error('Failed to fetch post', error);
+                alert('An error occurred while loading post');
+            } finally {
+                setIsFetching(false);
+            }
+        };
+        fetchPost();
+    }, [id]);
+
+    if (isFetching) {
+        return (
+            <div className="flex items-center justify-center p-20">
+                <div className="text-gray-500 font-medium animate-pulse">Loading post data...</div>
+            </div>
+        );
+    }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        // Simulate API call
-        setTimeout(() => {
+
+        try {
+            const response = await fetch(`/api/blogs/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    ...formData,
+                    tags: formData.tags.split(',').map(tag => tag.trim())
+                }),
+            });
+
+            if (response.ok) {
+                router.push('/admin/posts');
+            } else {
+                alert('Failed to update post');
+            }
+        } catch (error) {
+            console.error('Error updating post:', error);
+            alert('An error occurred');
+        } finally {
             setLoading(false);
-            router.push('/admin/posts');
-        }, 1000);
+        }
     };
 
     return (
@@ -35,15 +106,56 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
 
             <form onSubmit={handleSubmit} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 md:p-8 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <AdminInput label="Post Title" defaultValue="Top 10 Design Trends for 2026" required />
-                    <AdminInput label="Category" defaultValue="Design" required />
+                    <AdminInput
+                        label="Post Title"
+                        name="title"
+                        value={formData.title}
+                        onChange={handleChange}
+                        required
+                    />
+                    <AdminInput
+                        label="Category"
+                        name="category"
+                        value={formData.category}
+                        onChange={handleChange}
+                        required
+                    />
                 </div>
 
-                <AdminTextArea label="Excerpt" defaultValue="Discover the latest web and app design trends that will dominate this year." className="min-h-[100px]" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <AdminInput
+                        label="Author"
+                        name="author"
+                        value={formData.author}
+                        onChange={handleChange}
+                    />
+                    <AdminInput
+                        label="Reading Time"
+                        name="readingTime"
+                        value={formData.readingTime}
+                        onChange={handleChange}
+                    />
+                </div>
+                <AdminInput
+                    label="Tags (comma separated)"
+                    name="tags"
+                    value={formData.tags}
+                    onChange={handleChange}
+                />
+
+                <AdminTextArea
+                    label="Excerpt"
+                    name="excerpt"
+                    value={formData.excerpt}
+                    onChange={handleChange}
+                    className="min-h-[100px]"
+                />
 
                 <AdminTextArea
                     label="Content (HTML/Markdown)"
-                    defaultValue="<p>Full article content goes here...</p>"
+                    name="content"
+                    value={formData.content}
+                    onChange={handleChange}
                     className="min-h-[300px] font-mono text-sm"
                 />
 
@@ -52,8 +164,8 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <AdminImageUpload
                             label="Main Image"
-                            value="https://images.unsplash.com/photo-1626785774573-4b7993143d2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
-                            onChange={() => { }}
+                            value={formData.image}
+                            onChange={(value) => setFormData(prev => ({ ...prev, image: value || '' }))}
                         />
                     </div>
                 </div>

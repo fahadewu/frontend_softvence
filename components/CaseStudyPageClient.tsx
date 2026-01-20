@@ -115,7 +115,7 @@ export default function CaseStudyPageClient({
                                         <div className="case--hero--content text-center">
                                             <p className="common--sub--heading" data-aos="fade-up" data-aos-duration="1000">{section.subHeading}</p>
                                             <h1 className="common--heading" data-aos="fade-up" data-aos-duration="1000">{section.heading}</h1>
-                                            <div className="case--hero--img">
+                                            <div className="case--hero--img" data-aos="fade-up" data-aos-duration="1000">
                                                 <img src={section.image} className="w-100" alt={section.heading} />
                                             </div>
                                         </div>
