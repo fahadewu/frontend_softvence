@@ -1,31 +1,15 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import dbConnect from '@/lib/db';
+import Testimonial from '@/models/Testimonial';
 
-const dataFilePath = path.join(process.cwd(), 'data', 'testimonials.json');
-
-function getTestimonials() {
-    if (!fs.existsSync(dataFilePath)) {
-        return [];
-    }
-    const fileContent = fs.readFileSync(dataFilePath, 'utf8');
-    const data = JSON.parse(fileContent);
-    return data.testimonials || [];
-}
-
-function saveTestimonials(testimonials: any[]) {
-    const dir = path.dirname(dataFilePath);
-    if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-    }
-    fs.writeFileSync(dataFilePath, JSON.stringify({ testimonials }, null, 2));
-}
-
-export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function GET(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
+        await dbConnect();
         const { id } = await params;
-        const testimonials = getTestimonials();
-        const testimonial = testimonials.find((t: any) => t.id.toString() === id);
+        const testimonial = await Testimonial.findById(id);
 
         if (!testimonial) {
             return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
@@ -37,40 +21,42 @@ export async function GET(request: Request, { params }: { params: Promise<{ id: 
     }
 }
 
-export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function PUT(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
+        await dbConnect();
         const { id } = await params;
         const body = await request.json();
-        const testimonials = getTestimonials();
 
-        const index = testimonials.findIndex((t: any) => t.id.toString() === id);
+        const updatedTestimonial = await Testimonial.findByIdAndUpdate(id, body, {
+            new: true,
+            runValidators: true,
+        });
 
-        if (index === -1) {
+        if (!updatedTestimonial) {
             return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
         }
 
-        // Update fields
-        testimonials[index] = { ...testimonials[index], ...body };
-        saveTestimonials(testimonials);
-
-        return NextResponse.json(testimonials[index]);
+        return NextResponse.json(updatedTestimonial);
     } catch (error) {
         return NextResponse.json({ error: 'Failed to update testimonial' }, { status: 500 });
     }
 }
 
-export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+    request: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
     try {
+        await dbConnect();
         const { id } = await params;
-        const testimonials = getTestimonials();
+        const deletedTestimonial = await Testimonial.findByIdAndDelete(id);
 
-        const filteredTestimonials = testimonials.filter((t: any) => t.id.toString() !== id);
-
-        if (filteredTestimonials.length === testimonials.length) {
+        if (!deletedTestimonial) {
             return NextResponse.json({ error: 'Testimonial not found' }, { status: 404 });
         }
-
-        saveTestimonials(filteredTestimonials);
 
         return NextResponse.json({ message: 'Testimonial deleted successfully' });
     } catch (error) {

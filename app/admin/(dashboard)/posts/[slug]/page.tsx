@@ -6,8 +6,8 @@ import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { AdminPageHeader, AdminInput, AdminTextArea, AdminImageUpload } from '@/components/admin/ui';
 
-export default function EditPostPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params); // Unwrapping params using React.use() for Next.js 15+
+export default function EditPostPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = use(params); // Unwrapping params using React.use() for Next.js 15+
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [isFetching, setIsFetching] = useState(true);
@@ -24,10 +24,10 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
 
     useEffect(() => {
         const fetchPost = async () => {
-            console.log('Fetching post with ID:', id);
-            if (!id) return;
+            console.log('Fetching post with slug:', slug);
+            if (!slug) return;
             try {
-                const response = await fetch(`/api/blogs/${id}`);
+                const response = await fetch(`/api/blogs/${slug}`);
                 console.log('Fetch response status:', response.status);
                 if (response.ok) {
                     const data = await response.json();
@@ -48,7 +48,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             }
         };
         fetchPost();
-    }, [id]);
+    }, [slug]);
 
     if (isFetching) {
         return (
@@ -68,7 +68,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
         setLoading(true);
 
         try {
-            const response = await fetch(`/api/blogs/${id}`, {
+            const response = await fetch(`/api/blogs/${slug}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -100,7 +100,7 @@ export default function EditPostPage({ params }: { params: Promise<{ id: string 
             </Link>
 
             <AdminPageHeader
-                title={`Edit Post #${id}`}
+                title={`Edit Post: ${slug}`}
                 breadcrumbs={[{ label: 'Dashboard', href: '/admin' }, { label: 'Blog Posts', href: '/admin/posts' }, { label: 'Edit' }]}
             />
 

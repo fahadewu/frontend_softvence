@@ -5,6 +5,13 @@ import { Settings, Save, AlertTriangle, ShieldCheck } from 'lucide-react';
 
 export default function SettingsPage() {
     const [maintenanceEnabled, setMaintenanceEnabled] = useState(false);
+    const [pageVisibility, setPageVisibility] = useState({
+        about: true,
+        blog: true,
+        work: true,
+        services: true,
+        contact: true
+    });
     const [loading, setLoading] = useState(true);
     const [saving, setSaving] = useState(false);
     const [message, setMessage] = useState('');
@@ -18,6 +25,9 @@ export default function SettingsPage() {
             const res = await fetch('/api/settings');
             const data = await res.json();
             setMaintenanceEnabled(data.maintenance.enabled);
+            if (data.pageVisibility) {
+                setPageVisibility(data.pageVisibility);
+            }
         } catch (error) {
             console.error('Failed to fetch settings');
         } finally {
@@ -33,7 +43,8 @@ export default function SettingsPage() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    maintenance: { enabled: maintenanceEnabled }
+                    maintenance: { enabled: maintenanceEnabled },
+                    pageVisibility
                 })
             });
 
@@ -48,6 +59,13 @@ export default function SettingsPage() {
         } finally {
             setSaving(false);
         }
+    };
+
+    const handleTogglePageVisibility = (page: string) => {
+        setPageVisibility(prev => ({
+            ...prev,
+            [page]: !(prev as any)[page]
+        }));
     };
 
     if (loading) return (
@@ -105,15 +123,36 @@ export default function SettingsPage() {
                             <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-0 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-red-500"></div>
                         </label>
                     </div>
-                    <div className="p-6 bg-gray-50/50">
-                        <div className="flex gap-4 items-start">
-                            <div className="mt-1">
-                                <AlertTriangle size={18} className="text-amber-500" />
+                </div>
+
+                {/* Page Visibility Card */}
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+                    <div className="p-6 border-b border-gray-50 bg-gray-50/30">
+                        <h3 className="font-bold text-gray-900">Page Visibility Management</h3>
+                        <p className="text-sm text-gray-500 italic">Toggle public visibility for specific areas of the website.</p>
+                    </div>
+                    <div className="p-6 divide-y divide-gray-50">
+                        {Object.entries(pageVisibility).map(([key, value]) => (
+                            <div key={key} className="py-4 first:pt-0 last:pb-0 flex items-center justify-between">
+                                <div className="flex flex-col">
+                                    <span className="font-semibold text-gray-800 capitalize">
+                                        {key.replace('-', ' ')} Page
+                                    </span>
+                                    <span className="text-xs text-gray-400 font-mono">
+                                        /{key === 'about' ? 'about-us' : key}
+                                    </span>
+                                </div>
+                                <label className="relative inline-flex items-center cursor-pointer">
+                                    <input
+                                        type="checkbox"
+                                        className="sr-only peer"
+                                        checked={value}
+                                        onChange={() => handleTogglePageVisibility(key)}
+                                    />
+                                    <div className="w-14 h-7 bg-gray-200 peer-focus:outline-none ring-0 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary"></div>
+                                </label>
                             </div>
-                            <div className="text-sm text-gray-600 leading-relaxed">
-                                <span className="font-bold text-amber-600">Warning:</span> Enabling maintenance mode will redirect all public visitors to the maintenance page. Admin panel access will remain available for you to finish your updates.
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 

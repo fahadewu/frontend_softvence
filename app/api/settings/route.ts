@@ -17,21 +17,15 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { maintenance } = body;
-
-        if (!maintenance) {
-            return NextResponse.json({ error: 'Invalid settings data' }, { status: 400 });
-        }
+        const { maintenance, pageVisibility } = body;
 
         const fileContent = fs.readFileSync(settingsFilePath, 'utf8');
         const settings = JSON.parse(fileContent);
 
         const updatedSettings = {
             ...settings,
-            maintenance: {
-                ...settings.maintenance,
-                ...maintenance
-            }
+            maintenance: maintenance ? { ...settings.maintenance, ...maintenance } : settings.maintenance,
+            pageVisibility: pageVisibility ? { ...settings.pageVisibility, ...pageVisibility } : settings.pageVisibility
         };
 
         fs.writeFileSync(settingsFilePath, JSON.stringify(updatedSettings, null, 2));

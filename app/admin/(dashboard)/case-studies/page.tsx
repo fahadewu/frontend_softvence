@@ -7,6 +7,8 @@ import { AdminPageHeader } from '@/components/admin/ui';
 import Image from 'next/image';
 
 interface CaseStudy {
+    _id: string;
+    slug: string;
     id: number;
     title: string;
     client: string;
@@ -41,16 +43,16 @@ export default function CaseStudiesPage() {
         fetchCaseStudies();
     }, []);
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (slug: string) => {
         if (!confirm('Are you sure you want to delete this case study?')) return;
 
         try {
-            const response = await fetch(`/api/case-studies/${id}`, {
+            const response = await fetch(`/api/case-studies/${slug}`, {
                 method: 'DELETE',
             });
 
             if (response.ok) {
-                setCaseStudies(caseStudies.filter((s) => s.id !== id));
+                setCaseStudies(caseStudies.filter((s) => s.slug !== slug));
             } else {
                 alert('Failed to delete case study');
             }
@@ -115,7 +117,7 @@ export default function CaseStudiesPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {filteredStudies.map((study) => (
-                        <div key={study.id} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all group font-outfit">
+                        <div key={study._id} className="bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden hover:shadow-md transition-all group font-outfit">
                             <div className="relative h-48 w-full bg-gray-100">
                                 <Image
                                     src={study.image}
@@ -140,14 +142,14 @@ export default function CaseStudiesPage() {
 
                                 <div className="flex items-center gap-3 pt-4 border-t border-gray-50">
                                     <Link
-                                        href={`/admin/case-studies/${study.id}`}
+                                        href={`/admin/case-studies/${study.slug}`}
                                         className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-50 text-gray-600 font-medium hover:bg-primary hover:text-white transition-colors text-sm"
                                     >
                                         <Edit size={16} />
                                         Edit
                                     </Link>
                                     <button
-                                        onClick={() => handleDelete(study.id)}
+                                        onClick={() => handleDelete(study.slug)}
                                         className="flex items-center justify-center p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
                                     >
                                         <Trash2 size={16} />

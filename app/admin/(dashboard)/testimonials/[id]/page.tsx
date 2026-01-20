@@ -86,7 +86,7 @@ export default function EditTestimonialPage({ params }: { params: Promise<{ id: 
             </Link>
 
             <AdminPageHeader
-                title={`Edit Testimonial #${id}`}
+                title="Edit Testimonial"
                 breadcrumbs={[{ label: 'Dashboard', href: '/admin' }, { label: 'Testimonials', href: '/admin/testimonials' }, { label: 'Edit' }]}
             />
 

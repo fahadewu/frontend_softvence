@@ -3,7 +3,11 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, Briefcase, Settings, X, LogOut, MessageSquare } from 'lucide-react';
+import { LayoutDashboard, FileText, Briefcase, Settings, X, LogOut, MessageSquare, Info, Users, ScrollText } from 'lucide-react';
+// ... rest of imports
+
+// ... inside component
+
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
@@ -31,10 +35,13 @@ const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
 
     const links = [
         { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+        { name: 'About Us', href: '/admin/about', icon: Info },
         { name: 'Services', href: '/admin/services', icon: Settings },
         { name: 'Case Studies', href: '/admin/case-studies', icon: FileText },
         { name: 'Testimonials', href: '/admin/testimonials', icon: MessageSquare },
         { name: 'Blog Posts', href: '/admin/posts', icon: FileText },
+        { name: 'Users', href: '/admin/users', icon: Users },
+        { name: 'Activity Logs', href: '/admin/logs', icon: ScrollText },
         { name: 'Settings', href: '/admin/settings', icon: Settings },
     ];
 

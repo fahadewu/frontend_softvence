@@ -21,9 +21,9 @@ export default function PostsPage() {
         fetchPosts();
     }, []);
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (slug: string) => {
         if (confirm('Are you sure you want to delete this post?')) {
-            const response = await fetch(`/api/blogs/${id}`, {
+            const response = await fetch(`/api/blogs/${slug}`, {
                 method: 'DELETE',
             });
             if (response.ok) {
@@ -52,7 +52,7 @@ export default function PostsPage() {
 
             <div className="space-y-4">
                 {posts.map((post) => (
-                    <div key={post.id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-6 hover:shadow-md transition-all">
+                    <div key={post._id} className="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex flex-col md:flex-row gap-6 hover:shadow-md transition-all">
                         <div className="relative w-full md:w-48 h-32 rounded-lg overflow-hidden flex-shrink-0">
                             {post.image ? (
                                 <Image src={post.image} alt={post.title} fill className="object-cover" />
@@ -65,7 +65,7 @@ export default function PostsPage() {
                             <div className="flex items-center gap-3 text-xs text-gray-400 mb-2">
                                 <div className="flex items-center gap-1">
                                     <Calendar size={12} />
-                                    <span>{post.date}</span>
+                                    <span>{new Date(post.date).toLocaleDateString()}</span>
                                 </div>
                                 <span className="w-1 h-1 rounded-full bg-gray-300"></span>
                                 <span className="text-primary font-medium">{post.category}</span>
@@ -77,14 +77,14 @@ export default function PostsPage() {
 
                         <div className="flex md:flex-col items-center justify-center gap-3 border-t md:border-t-0 md:border-l border-gray-50 pt-4 md:pt-0 md:pl-4">
                             <Link
-                                href={`/admin/posts/${post.id}`}
+                                href={`/admin/posts/${post.slug}`}
                                 className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-gray-50 text-gray-600 font-medium hover:bg-primary hover:text-white transition-colors text-sm"
                             >
                                 <Edit size={16} />
                                 Edit
                             </Link>
                             <button
-                                onClick={() => handleDelete(post.id)}
+                                onClick={() => handleDelete(post.slug)}
                                 className="w-full flex items-center justify-center p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
                             >
                                 <Trash2 size={16} />

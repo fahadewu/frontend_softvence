@@ -6,8 +6,8 @@ import { Save, ArrowLeft, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { AdminPageHeader, AdminInput, AdminTextArea, AdminImageUpload } from '@/components/admin/ui';
 
-export default function EditCaseStudyPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+export default function EditCaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = use(params);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [fetching, setFetching] = useState(true);
@@ -27,7 +27,7 @@ export default function EditCaseStudyPage({ params }: { params: Promise<{ id: st
     useEffect(() => {
         const fetchCaseStudy = async () => {
             try {
-                const response = await fetch(`/api/case-studies/${id}`);
+                const response = await fetch(`/api/case-studies/${slug}`);
                 if (response.ok) {
                     const data = await response.json();
                     setFormData({
@@ -53,7 +53,7 @@ export default function EditCaseStudyPage({ params }: { params: Promise<{ id: st
             }
         };
         fetchCaseStudy();
-    }, [id, router]);
+    }, [slug, router]);
 
     const addSection = (type: string) => {
         let newSection: any = { type };
@@ -103,7 +103,7 @@ export default function EditCaseStudyPage({ params }: { params: Promise<{ id: st
         setLoading(true);
 
         try {
-            const response = await fetch(`/api/case-studies/${id}`, {
+            const response = await fetch(`/api/case-studies/${slug}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

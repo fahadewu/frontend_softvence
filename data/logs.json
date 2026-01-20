@@ -1,0 +1,18 @@
+[
+    {
+        "id": "1",
+        "action": "Login",
+        "description": "Admin User logged in",
+        "user": "Admin User",
+        "timestamp": "2024-03-20T10:00:00Z",
+        "type": "info"
+    },
+    {
+        "id": "2",
+        "action": "Update Settings",
+        "description": "Maintenance mode enabled",
+        "user": "Super Admin",
+        "timestamp": "2024-03-19T14:30:00Z",
+        "type": "warning"
+    }
+]

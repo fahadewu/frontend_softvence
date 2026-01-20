@@ -1,32 +1,50 @@
 import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import dbConnect from '@/lib/db';
+import About from '@/models/About';
+import { AboutData } from '@/types/about';
 
-const dataFilePath = path.join(process.cwd(), 'data', 'about.json');
-
-function getAboutData() {
-    if (!fs.existsSync(dataFilePath)) {
-        return null;
-    }
-    const jsonData = fs.readFileSync(dataFilePath, 'utf-8');
-    return JSON.parse(jsonData);
-}
+const initialAboutData: AboutData = {
+    hero: { title1: '', title2: '', cta: { text: '', link: '' } },
+    whoWeAre: { heading: '', description: '', counters: [] },
+    whyChooseUs: { heading: '', subHeading: '', cards: [] },
+    team: { heading: '', subHeading: '', description: '', images: [] },
+    aboutImage: '',
+    awards: { heading: '', subHeading: '', items: [] },
+    portfolioIntro: { heading: '' },
+    marqueeLogos: []
+};
 
 export async function GET() {
-    const data = getAboutData();
-    if (!data) {
-        return NextResponse.json({ error: 'Data not found' }, { status: 404 });
+    try {
+        await dbConnect();
+        let aboutData = await About.findOne().sort({ createdAt: -1 });
+
+        if (!aboutData) {
+            return NextResponse.json(initialAboutData);
+        }
+
+        return NextResponse.json(aboutData);
+    } catch (error) {
+        console.error('Database Error:', error);
+        return NextResponse.json({ error: 'Failed to fetch data' }, { status: 500 });
     }
-    return NextResponse.json(data);
 }
 
 export async function POST(request: NextRequest) {
     try {
-        const data = await request.json();
-        fs.mkdirSync(path.dirname(dataFilePath), { recursive: true });
-        fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
-        return NextResponse.json({ message: 'Data updated successfully' });
+        await dbConnect();
+        const body = await request.json();
+
+        // Upsert the single document
+        const updated = await About.findOneAndUpdate(
+            {},
+            body,
+            { new: true, upsert: true, setDefaultsOnInsert: true }
+        );
+
+        return NextResponse.json({ message: 'Data saved successfully', data: updated });
     } catch (error) {
-        return NextResponse.json({ error: 'Failed to update data' }, { status: 500 });
+        console.error('Database Error:', error);
+        return NextResponse.json({ error: 'Failed to save data' }, { status: 500 });
     }
 }

@@ -7,7 +7,8 @@ import { AdminPageHeader } from '@/components/admin/ui';
 import Image from 'next/image';
 
 interface Testimonial {
-    id: number;
+    _id: string;
+    id?: number;
     name: string;
     role: string;
     image: string;
@@ -36,7 +37,7 @@ export default function TestimonialsPage() {
         fetchTestimonials();
     }, []);
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this testimonial?')) return;
 
         try {
@@ -45,7 +46,7 @@ export default function TestimonialsPage() {
             });
 
             if (response.ok) {
-                setTestimonials(testimonials.filter((t) => t.id !== id));
+                setTestimonials(testimonials.filter((t) => t._id !== id));
             } else {
                 alert('Failed to delete testimonial');
             }
@@ -77,7 +78,7 @@ export default function TestimonialsPage() {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {testimonials.map((t) => (
-                        <div key={t.id} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative group">
+                        <div key={t._id} className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm relative group">
                             <Quote className="absolute top-6 right-6 text-gray-100" size={40} />
 
                             <div className="flex items-center gap-4 mb-4 relative z-10">
@@ -94,14 +95,14 @@ export default function TestimonialsPage() {
 
                             <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-50 relative z-10">
                                 <Link
-                                    href={`/admin/testimonials/${t.id}`}
+                                    href={`/admin/testimonials/${t._id}`}
                                     className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-50 text-gray-600 font-medium hover:bg-primary hover:text-white transition-colors text-sm"
                                 >
                                     <Edit size={16} />
                                     Edit
                                 </Link>
                                 <button
-                                    onClick={() => handleDelete(t.id)}
+                                    onClick={() => handleDelete(t._id)}
                                     className="flex items-center justify-center p-2 rounded-lg bg-red-50 text-red-500 hover:bg-red-500 hover:text-white transition-colors"
                                 >
                                     <Trash2 size={16} />

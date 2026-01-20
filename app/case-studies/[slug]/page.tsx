@@ -1,109 +1,131 @@
+import { notFound } from 'next/navigation';
 import fs from 'fs';
 import path from 'path';
-import { notFound } from 'next/navigation';
 import CaseStudyPageClient from '@/components/CaseStudyPageClient';
-import caseStudiesData from '@/data/caseStudies.json';
+import dbConnect from '@/lib/db';
+import CaseStudy from '@/models/CaseStudy';
 
-// Get all case studies from JSON
-const allCaseStudies = caseStudiesData.caseStudies.map(cs => ({
-    slug: cs.slug,
-    title: cs.title,
-    categories: cs.categories.join(' '),
-    image: cs.image
-}));
+export const dynamic = 'force-dynamic';
+
+export async function generateStaticParams() {
+    try {
+        await dbConnect();
+        const studies = await CaseStudy.find({}, { slug: 1 }).lean();
+        return studies.map((study: any) => ({
+            slug: study.slug,
+        }));
+    } catch (error) {
+        console.error('Error generating static params for case studies:', error);
+        return [];
+    }
+}
+
+async function getCaseStudyData(slug: string) {
+    await dbConnect();
+
+    // Fetch current study
+    const currentStudy = await CaseStudy.findOne({ slug }).lean();
+    if (!currentStudy) return null;
+
+    // Fetch all studies to determine prev/next and related
+    // We sort by createdAt to match the listing order
+    const allStudies = await CaseStudy.find({}).sort({ createdAt: -1 }).lean();
+
+    const currentIndex = allStudies.findIndex((cs: any) => cs.slug === slug);
+
+    const prevCaseStudy = currentIndex > 0 ? allStudies[currentIndex - 1] : null;
+    const nextCaseStudy = currentIndex < allStudies.length - 1 ? allStudies[currentIndex + 1] : null;
+
+    // Get related case studies (excluding current one)
+    const relatedCaseStudies = allStudies
+        .filter((_: any, index: number) => index !== currentIndex)
+        .slice(0, 6);
+
+    // Serialization helper
+    const serialize = (study: any) => {
+        if (!study) return null;
+        return {
+            ...study,
+            _id: study._id.toString(),
+            categories: Array.isArray(study.categories) ? study.categories.join(' ') : study.categories,
+            createdAt: study.createdAt instanceof Date ? study.createdAt.toISOString() : study.createdAt,
+            updatedAt: study.updatedAt instanceof Date ? study.updatedAt.toISOString() : study.updatedAt,
+        };
+    };
+
+    return {
+        currentCaseStudy: serialize(currentStudy),
+        prevCaseStudy: serialize(prevCaseStudy),
+        nextCaseStudy: serialize(nextCaseStudy),
+        relatedCaseStudies: relatedCaseStudies.map(serialize)
+    };
+}
 
 export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+    const data = await getCaseStudyData(slug);
 
-    // Find current case study index
-    const currentIndex = allCaseStudies.findIndex(cs => cs.slug === slug);
-    if (currentIndex === -1) {
+    if (!data) {
         return notFound();
     }
 
-    // Get previous and next case studies
-    const prevCaseStudy = currentIndex > 0 ? allCaseStudies[currentIndex - 1] : null;
-    const nextCaseStudy = currentIndex < allCaseStudies.length - 1 ? allCaseStudies[currentIndex + 1] : null;
+    const { currentCaseStudy, prevCaseStudy, nextCaseStudy, relatedCaseStudies } = data;
 
-    // Get related case studies (excluding current one)
-    const relatedCaseStudies = allCaseStudies.filter((_, index) => index !== currentIndex).slice(0, 6);
+    // We still attempt to load HTML content for studies that might not have full sections in the database
+    // This provides a safety net during transition.
+    let htmlContent = '';
+    try {
+        const projectRoot = process.cwd();
+        const caseStudiesDir = path.join(projectRoot, 'case_studies');
+        let filePath = path.join(caseStudiesDir, slug, 'index.html');
 
-    // Correct path: project root/case_studies
-    const projectRoot = process.cwd();
-    const caseStudiesDir = path.join(projectRoot, 'case_studies');
-    let filePath = path.join(caseStudiesDir, slug, 'index.html');
+        if (fs.existsSync(filePath)) {
+            htmlContent = fs.readFileSync(filePath, 'utf-8');
 
-    if (!fs.existsSync(filePath)) {
-        return notFound();
+            // Basic cleanup for hydration
+            htmlContent = htmlContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+            htmlContent = htmlContent.replace(/\t/g, '');
+
+            // Extract main content
+            const mainMatch = htmlContent.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
+            let mainContent = mainMatch ? mainMatch[1] : '';
+
+            if (!mainContent) {
+                const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+                mainContent = bodyMatch ? bodyMatch[1] : htmlContent;
+                mainContent = mainContent.replace(/<header[\s\S]*?<\/header>/gi, '');
+                mainContent = mainContent.replace(/<footer[\s\S]*?<\/footer>/gi, '');
+            }
+
+            // Cleanup
+            mainContent = mainContent.replace(/<script[\s\S]*?<\/script>/gi, '');
+            mainContent = mainContent.replace(/<script[^>]*>/gi, '');
+            mainContent = mainContent.replace(/<section[^>]*class="[^"]*case--studies--area[^"]*"[\s\S]*?<\/section>/gi, '');
+            mainContent = mainContent.replace(/<section[^>]*class="[^"]*contact--marquee--area[^"]*"[\s\S]*?<\/section>/gi, '');
+            mainContent = mainContent.replace(/<div[^>]*class="[^"]*case-study-navigation[^"]*"[\s\S]*?<\/div>/gi, '');
+
+            // Fix paths
+            mainContent = mainContent.replace(/<([a-z0-9]+)([\s\S]*?)bv-data-src="([^"]+)"([\s\S]*?)>/gi, (match, tag, p1, p2, p3) => {
+                return `<${tag} src="${p2}" ${p1} ${p3} />`;
+            });
+            mainContent = mainContent.replace(/src="wp-content\//g, 'src="/wp-content/');
+            mainContent = mainContent.replace(/src="assets\//g, 'src="/assets/');
+            mainContent = mainContent.replace(/href="\.\.\/\.\.\//g, 'href="/');
+            mainContent = mainContent.replace(/href="\.\.\//g, 'href="/case-studies/');
+            mainContent = mainContent.replace(/href="([^"]*)\/index\.html"/g, 'href="$1"');
+            mainContent = mainContent.replace(/href="([^"]*)index\.html"/g, 'href="$1"');
+            mainContent = mainContent.replace(/<link[\s\S]*?>/gi, '');
+            mainContent = mainContent.replace(/<meta[\s\S]*?>/gi, '');
+
+            htmlContent = mainContent.trim();
+        }
+    } catch (e) {
+        console.error('Error reading HTML content for case study:', e);
     }
-
-    let htmlContent = fs.readFileSync(filePath, 'utf-8');
-
-    // Normalize line endings and whitespace to prevent hydration mismatches
-    htmlContent = htmlContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-    // Normalize tabs to spaces
-    htmlContent = htmlContent.replace(/\t/g, '');
-
-    // Extract main content only (everything inside <main> tag)
-    const mainMatch = htmlContent.match(/<main[^>]*>([\s\S]*?)<\/main>/i);
-    let mainContent = mainMatch ? mainMatch[1] : '';
-
-    if (!mainContent) {
-        // Fallback: try to extract body content
-        const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        mainContent = bodyMatch ? bodyMatch[1] : htmlContent;
-
-        // Remove Header if we're using body
-        mainContent = mainContent.replace(/<header[\s\S]*?<\/header>/gi, '');
-        // Remove Footer
-        mainContent = mainContent.replace(/<footer[\s\S]*?<\/footer>/gi, '');
-    }
-
-    // Remove ALL Scripts (including those in the body)
-    mainContent = mainContent.replace(/<script[\s\S]*?<\/script>/gi, '');
-    mainContent = mainContent.replace(/<script[^>]*>/gi, ''); // Remove unclosed script tags
-
-    // Remove existing related case studies section (we'll add our own)
-    mainContent = mainContent.replace(/<section[^>]*class="[^"]*case--studies--area[^"]*"[\s\S]*?<\/section>/gi, '');
-
-    // Remove contact marquee (we'll add it via component)
-    mainContent = mainContent.replace(/<section[^>]*class="[^"]*contact--marquee--area[^"]*"[\s\S]*?<\/section>/gi, '');
-
-    // Remove navigation sections if they exist
-    mainContent = mainContent.replace(/<div[^>]*class="[^"]*case-study-navigation[^"]*"[\s\S]*?<\/div>/gi, '');
-
-    // Fix image paths: Use bv-data-src as src if available - more robust regex for any tag
-    mainContent = mainContent.replace(/<([a-z0-9]+)([\s\S]*?)bv-data-src="([^"]+)"([\s\S]*?)>/gi, (match, tag, p1, p2, p3) => {
-        return `<${tag} src="${p2}" ${p1} ${p3} />`;
-    });
-
-    // Fix any relative wp-content/assets paths
-    mainContent = mainContent.replace(/src="wp-content\//g, 'src="/wp-content/');
-    mainContent = mainContent.replace(/src="assets\//g, 'src="/assets/');
-
-    // Fix links
-    mainContent = mainContent.replace(/href="\.\.\/\.\.\//g, 'href="/');
-    mainContent = mainContent.replace(/href="\.\.\//g, 'href="/case-studies/');
-
-    // Remove index.html from links
-    mainContent = mainContent.replace(/href="([^"]*)\/index\.html"/g, 'href="$1"');
-    mainContent = mainContent.replace(/href="([^"]*)index\.html"/g, 'href="$1"');
-
-    // Remove link tags (stylesheets that might conflict) - but keep them if inside head
-    mainContent = mainContent.replace(/<link[\s\S]*?>/gi, '');
-
-    // Remove meta tags
-    mainContent = mainContent.replace(/<meta[\s\S]*?>/gi, '');
-
-    // Simple trim only - avoid aggressive whitespace removal
-    mainContent = mainContent.trim();
-
-    // Get current case study full data
-    const currentCaseStudy = caseStudiesData.caseStudies[currentIndex];
 
     return (
         <CaseStudyPageClient
-            htmlContent={mainContent}
+            htmlContent={htmlContent}
             caseStudyData={currentCaseStudy}
             relatedCaseStudies={relatedCaseStudies}
             prevCaseStudy={prevCaseStudy}

@@ -3,5 +3,12 @@
     "enabled": false,
     "message": "We're currently updating our system to serve you better. We'll be back shortly!",
     "estimatedEndTime": null
+  },
+  "pageVisibility": {
+    "about": true,
+    "blog": true,
+    "work": true,
+    "services": true,
+    "contact": true
   }
 }

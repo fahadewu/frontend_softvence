@@ -2,12 +2,38 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import caseStudiesData from '@/data/caseStudies.json';
+
+interface CaseStudyType {
+    _id: string;
+    slug: string;
+    title: string;
+    description: string;
+    categories: string[];
+    image: string;
+}
 
 export default function CaseStudySection() {
     const sectionRef = useRef<HTMLElement>(null);
     const circleRef = useRef<HTMLDivElement>(null);
     const [filter, setFilter] = useState('*');
+    const [allCaseStudies, setAllCaseStudies] = useState<CaseStudyType[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchCaseStudies = async () => {
+            try {
+                const response = await fetch('/api/case-studies');
+                const data = await response.json();
+                setAllCaseStudies(data);
+            } catch (error) {
+                console.error('Failed to fetch case studies:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCaseStudies();
+    }, []);
 
     useEffect(() => {
         let ctx: any;
@@ -22,7 +48,6 @@ export default function CaseStudySection() {
                 return false;
             }
 
-            // Only register if not already done (gsap handles this safely though)
             gsap.registerPlugin(ScrollTrigger);
 
             const section = sectionRef.current;
@@ -52,18 +77,14 @@ export default function CaseStudySection() {
         };
 
         if (typeof window !== 'undefined') {
-            // Robust Polling Strategy:
-            // Attempt to initialize every 200ms until successful or timeout
-            // Also force refresh for a few seconds to handle layout shifts
             let attempts = 0;
-            const maxAttempts = 20; // 4 seconds
+            const maxAttempts = 20;
 
             initInterval = setInterval(() => {
                 attempts++;
                 const success = initAnimation();
 
                 if (success) {
-                    // Force refresh to catch layout updates
                     const winAny = window as any;
                     if (winAny.ScrollTrigger) winAny.ScrollTrigger.refresh();
                 }
@@ -92,8 +113,6 @@ export default function CaseStudySection() {
         { name: 'Vibe Coding', value: '.vibe-coding' },
         { name: 'Web Development', value: '.web-develop' }
     ];
-
-    const allCaseStudies = caseStudiesData.caseStudies;
 
     const filteredCases = filter === '*'
         ? allCaseStudies.slice(0, 6)
@@ -136,60 +155,68 @@ export default function CaseStudySection() {
                         innovate, <span className="primary--color">design & <br /> Develop</span> all things together.
                     </h3>
                 </div>
-                <div className="row" data-aos="fade-up" data-aos-duration="1000">
-                    <div className="col-md-12">
-                        <div className="case--studies--wrapper">
-                            <div className="filters filter-button-group">
-                                <ul>
-                                    {filterItems.map((item, index) => (
-                                        <li
-                                            key={index}
-                                            className={`button-click ${filter === item.value ? 'active' : ''}`}
-                                            onClick={() => handleFilterClick(item.value)}
-                                            data-filter={item.value}
-                                        >
-                                            {item.name}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                {loading ? (
+                    <div className="text-center py-5">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="row" data-aos="fade-up" data-aos-duration="1000">
+                        <div className="col-md-12">
+                            <div className="case--studies--wrapper">
+                                <div className="filters filter-button-group">
+                                    <ul>
+                                        {filterItems.map((item, index) => (
+                                            <li
+                                                key={index}
+                                                className={`button-click ${filter === item.value ? 'active' : ''}`}
+                                                onClick={() => handleFilterClick(item.value)}
+                                                data-filter={item.value}
+                                            >
+                                                {item.name}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
 
-                            <div className="row case-gallery">
-                                {filteredCases.length > 0 ? (
-                                    filteredCases.map((item, index) => (
-                                        <div key={index} className={`col-md-6 mt_85 ${item.categories?.join(' ')}`}>
-                                            <Link href={`/case-studies/${item.slug}`} className="case--item">
-                                                <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
-                                                    <div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom"></div>
-                                                    <img
-                                                        loading="lazy"
-                                                        src={item.image || "/assets/images/logo.jpg"}
-                                                        alt={item.title}
-                                                        onError={(e) => {
-                                                            (e.target as HTMLImageElement).src = `https://placehold.co/800x600?text=${encodeURIComponent(item.title)}`;
-                                                        }}
-                                                    />
-                                                    <div className="case--cursor" style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%) scale(0)', opacity: 0, position: 'absolute' }}>
-                                                        view<br />
-                                                        case study
+                                <div className="row case-gallery">
+                                    {filteredCases.length > 0 ? (
+                                        filteredCases.map((item, index) => (
+                                            <div key={item._id} className={`col-md-6 mt_85 ${item.categories?.join(' ')}`}>
+                                                <Link href={`/case-studies/${item.slug}`} className="case--item">
+                                                    <div className="img--area" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+                                                        <div className="img-overlay" data-bgc="#FFB748" data-aos="reveal-bottom"></div>
+                                                        <img
+                                                            loading="lazy"
+                                                            src={item.image || "/assets/images/logo.jpg"}
+                                                            alt={item.title}
+                                                            onError={(e) => {
+                                                                (e.target as HTMLImageElement).src = `https://placehold.co/800x600?text=${encodeURIComponent(item.title)}`;
+                                                            }}
+                                                        />
+                                                        <div className="case--cursor" style={{ pointerEvents: 'none', transform: 'translate(-50%, -50%) scale(0)', opacity: 0, position: 'absolute' }}>
+                                                            view<br />
+                                                            case study
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div className="content">
-                                                    <h3>{item.title}</h3>
-                                                    <p>{item.description}</p>
-                                                </div>
-                                            </Link>
+                                                    <div className="content">
+                                                        <h3>{item.title}</h3>
+                                                        <p>{item.description}</p>
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <div className="col-12 text-center py-5">
+                                            <p className="common--para italic text-gray-400">Our portfolio is constantly evolving. No case studies found for this category yet.</p>
                                         </div>
-                                    ))
-                                ) : (
-                                    <div className="col-12 text-center py-5">
-                                        <p className="common--para italic text-gray-400">Our portfolio is constantly evolving. No case studies found for this category yet.</p>
-                                    </div>
-                                )}
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
                 <div className="row mt-5">
                     <div className="col-md-12 text-center" data-aos="fade-up" data-aos-duration="1000">
                         <Link href="/work" className="button buttonv2 button-click">View All Case Studies</Link>

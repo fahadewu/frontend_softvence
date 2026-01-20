@@ -77,7 +77,7 @@ export default function ServicesPage() {
 
                         <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-50">
                             <Link
-                                href={`/admin/services/${service.id}`}
+                                href={`/admin/services/${service.slug}`}
                                 className="flex-1 flex items-center justify-center gap-2 py-2 rounded-lg bg-gray-50 text-gray-600 font-medium hover:bg-primary hover:text-white transition-colors text-sm"
                             >
                                 <Edit size={16} />

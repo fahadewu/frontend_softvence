@@ -1,8 +1,84 @@
-import React from 'react';
-import testimonialsData from '../data/testimonials.json';
+'use client';
+
+import React, { useEffect, useState } from 'react';
+
+interface TestimonialType {
+    _id: string;
+    name: string;
+    role: string;
+    content: string;
+    image?: string;
+    companyLogo?: string;
+}
 
 const Testimonials = () => {
-    const { testimonials } = testimonialsData;
+    const [testimonials, setTestimonials] = useState<TestimonialType[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const response = await fetch('/api/testimonials');
+                const data = await response.json();
+                setTestimonials(data);
+            } catch (error) {
+                console.error('Failed to fetch testimonials:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTestimonials();
+    }, []);
+
+    useEffect(() => {
+        // Re-initialize Owl Carousel after testimonials are loaded
+        if (!loading && testimonials.length > 0 && typeof window !== 'undefined') {
+            const timer = setTimeout(() => {
+                const $ = (window as any).$;
+                if ($ && $.fn.owlCarousel) {
+                    const carousel = $('.testi--slider');
+                    if (carousel.length) {
+                        // Destroy existing if any
+                        if (carousel.hasClass('owl-loaded')) {
+                            carousel.trigger('destroy.owl.carousel');
+                            carousel.removeClass('owl-loaded owl-drag');
+                        }
+
+                        carousel.owlCarousel({
+                            loop: testimonials.length > 1,
+                            margin: 30,
+                            nav: false,
+                            dots: true,
+                            autoplay: true,
+                            smartSpeed: 1000,
+                            autoplayTimeout: 5000,
+                            responsive: {
+                                0: { items: 1 },
+                                600: { items: 1 },
+                                1000: { items: 1 }
+                            }
+                        });
+                    }
+                }
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, [loading, testimonials]);
+
+    if (loading) {
+        return (
+            <section className="testimonial--area section section-light">
+                <div className="container">
+                    <div className="text-center py-5">
+                        <div className="spinner-border text-primary" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section className="testimonial--area section section-light">
@@ -27,7 +103,7 @@ const Testimonials = () => {
                         {testimonials.length > 0 ? (
                             <div className="owl-carousel testi--slider" data-aos="fade-In" data-aos-duration="2000">
                                 {testimonials.map((testimonial) => (
-                                    <div className="item" key={testimonial.id}>
+                                    <div className="item" key={testimonial._id}>
                                         <div className="testi--box">
                                             <div className="client--img--area">
                                                 <img
@@ -39,19 +115,8 @@ const Testimonials = () => {
                                                     }}
                                                 />
                                                 <a href="#" className="play--review">
-                                                    <svg viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" fill="#000">
-                                                        <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-                                                        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round"></g>
-                                                        <g id="SVGRepo_iconCarrier">
-                                                            <title>multimedia / 9 - multimedia, play icon</title>
-                                                            <g id="Free-Icons" stroke="none" strokeWidth="1" fill="#000" fillRule="evenodd" strokeLinecap="round" strokeLinejoin="round">
-                                                                <g transform="translate(-749.000000, -379.000000)" id="Group" stroke="#000" strokeWidth="2">
-                                                                    <g transform="translate(745.000000, 376.000000)" id="Shape">
-                                                                        <path d="M5,4.67805648 C5,4.56284567 5.03231968,4.44953549 5.09390785,4.34882312 C5.29405709,4.02152811 5.74836552,3.90360587 6.10863414,4.08543644 L20.6160344,11.4074417 C20.7378493,11.4689227 20.8382812,11.5601626 20.9059562,11.6708284 C21.1061054,11.9981234 20.976303,12.4108512 20.6160344,12.5926818 L6.10863414,19.9146871 C5.99777542,19.9706384 5.87304972,20 5.7462319,20 C5.3340994,20 5,19.6964791 5,19.322067 L5,4.67805648 Z"></path>
-                                                                    </g>
-                                                                </g>
-                                                            </g>
-                                                        </g>
+                                                    <svg viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000">
+                                                        <path d="M5,4.67805648 C5,4.56284567 5.03231968,4.44953549 5.09390785,4.34882312 C5.29405709,4.02152811 5.74836552,3.90360587 6.10863414,4.08543644 L20.6160344,11.4074417 C20.7378493,11.4689227 20.8382812,11.5601626 20.9059562,11.6708284 C21.1061054,11.9981234 20.976303,12.4108512 20.6160344,12.5926818 L6.10863414,19.9146871 C5.99777542,19.9706384 5.87304972,20 5.7462319,20 C5.3340994,20 5,19.6964791 5,19.322067 L5,4.67805648 Z"></path>
                                                     </svg>
                                                 </a>
                                             </div>

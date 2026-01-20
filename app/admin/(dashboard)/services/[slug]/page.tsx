@@ -6,8 +6,8 @@ import { Save, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { AdminPageHeader, AdminInput, AdminTextArea, AdminImageUpload } from '@/components/admin/ui';
 
-export default function EditServicePage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = use(params);
+export default function EditServicePage({ params }: { params: Promise<{ slug: string }> }) {
+    const { slug } = use(params);
     const router = useRouter();
     const [loading, setLoading] = useState(false);
 
@@ -29,7 +29,7 @@ export default function EditServicePage({ params }: { params: Promise<{ id: stri
             </Link>
 
             <AdminPageHeader
-                title={`Edit Service #${id}`}
+                title={`Edit Service: ${slug}`}
                 breadcrumbs={[{ label: 'Dashboard', href: '/admin' }, { label: 'Services', href: '/admin/services' }, { label: 'Edit' }]}
             />
 

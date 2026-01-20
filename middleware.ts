@@ -20,12 +20,32 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/maintenance', request.url));
     }
 
+    // 2. Page Visibility Check
+    if (!isAdminRoute && !isApiRoute && !isAsset && !isMaintenancePage) {
+        const visibility = (settingsData as any).pageVisibility || {};
+        const pathMap: Record<string, string> = {
+            '/about-us': 'about',
+            '/blog': 'blog',
+            '/work': 'work',
+            '/services': 'services',
+            '/contact': 'contact'
+        };
+
+        for (const [path, key] of Object.entries(pathMap)) {
+            if (pathname === path || pathname.startsWith(path + '/')) {
+                if ((visibility as any)[key] === false) {
+                    return NextResponse.rewrite(new URL('/404', request.url));
+                }
+            }
+        }
+    }
+
     // Redirect maintenance page to home if mode is OFF
     if (!isMaintenanceMode && isMaintenancePage) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // 2. Admin Route Protection
+    // 3. Admin Route Protection
     if (isAdminRoute) {
         const session = request.cookies.get('admin_session')?.value;
 
